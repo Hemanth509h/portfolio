@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight, ChevronDown, Github, Linkedin, Twitter, Mail, Phone, MapPin, MessageCircle, Instagram } from "lucide-react";
+import { ArrowRight, ChevronDown, Github, Linkedin, Twitter, Mail, Phone, MapPin, MessageCircle, Instagram, Code, Palette, Smartphone, Globe } from "lucide-react";
 import { useSkills, useProjects } from "@/hooks/use-portfolio";
 import { Navigation } from "@/components/Navigation";
 import { ProjectCard } from "@/components/ProjectCard";
@@ -157,6 +157,42 @@ export default function Home() {
                 </div>
               </div>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Skills Section */}
+      <section id="services" className="py-32 bg-secondary/5">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold font-display mb-4">My Services</h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              I offer a wide range of services to help you build and scale your digital products.
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[
+              { icon: Code, title: "Web Development", desc: "Building responsive and performant web applications using modern technologies." },
+              { icon: Palette, title: "UI/UX Design", desc: "Creating intuitive and visually appealing user interfaces with a focus on user experience." },
+              { icon: Smartphone, title: "Mobile Apps", desc: "Developing cross-platform mobile applications for iOS and Android." },
+              { icon: Globe, title: "SEO Optimization", desc: "Improving your website's visibility and ranking on search engine results pages." }
+            ].map((service, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.1 }}
+                viewport={{ once: true }}
+                className="p-8 rounded-3xl bg-card border border-white/5 hover:border-primary/50 transition-colors group"
+              >
+                <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-6 group-hover:scale-110 transition-transform">
+                  <service.icon size={28} />
+                </div>
+                <h3 className="text-xl font-bold mb-4">{service.title}</h3>
+                <p className="text-muted-foreground leading-relaxed">{service.desc}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -349,6 +385,20 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* Footer */}
+      <a 
+        href={`https://wa.me/${profile?.phone?.replace(/\D/g, '')}`} 
+        target="_blank" 
+        rel="noopener noreferrer"
+        className="fixed bottom-8 right-8 w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all z-50 group"
+        title="Chat with me on WhatsApp"
+      >
+        <MessageCircle size={32} />
+        <span className="absolute right-full mr-4 px-4 py-2 bg-card border border-white/10 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap text-sm font-medium">
+          Chat with me!
+        </span>
+      </a>
 
       {/* Footer */}
       <footer className="py-12 border-t border-white/5">

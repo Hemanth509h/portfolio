@@ -1,4 +1,5 @@
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ChevronDown, Github, Linkedin, Twitter, Mail, Phone, MapPin, MessageCircle, Instagram, Code, Palette, Smartphone, Globe } from "lucide-react";
 import { useSkills, useProjects } from "@/hooks/use-portfolio";
 import { Navigation } from "@/components/Navigation";
@@ -17,26 +18,64 @@ export default function Home() {
     queryKey: ["/api/profile"],
   });
 
-  const groupedSkills = skills?.reduce((acc, skill) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+
+  useEffect(() => {
+    if (profile?.photoUrl) {
+      const img = new Image();
+      img.src = profile.photoUrl;
+      img.onload = () => setImageLoaded(true);
+      img.onerror = () => setImageLoaded(true);
+    } else if (!profileLoading) {
+      setImageLoaded(true);
+    }
+  }, [profile?.photoUrl, profileLoading]);
+
+  const groupedSkills = skills?.reduce((acc: any, skill: any) => {
     const category = skill.category || "Other";
     if (!acc[category]) acc[category] = [];
     acc[category].push(skill);
     return acc;
-  }, {} as Record<string, typeof skills>);
+  }, {} as Record<string, any[]>);
 
-  if (profileLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <Skeleton className="h-20 w-20 rounded-full" />
-      </div>
-    );
-  }
+  const isActuallyLoading = profileLoading || !imageLoaded;
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden selection:bg-primary/30">
-      <Navigation />
+      <AnimatePresence mode="wait">
+        {isActuallyLoading ? (
+          <motion.div
+            key="loader"
+            initial={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-background"
+          >
+            <div className="relative">
+              <div className="h-24 w-24 rounded-full border-t-2 border-primary animate-spin" />
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="h-16 w-16 rounded-full border-b-2 border-secondary animate-spin-reverse" />
+              </div>
+            </div>
+            <motion.p
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2 }}
+              className="mt-8 text-lg font-medium tracking-widest text-muted-foreground uppercase"
+            >
+              Loading Portfolio...
+            </motion.p>
+          </motion.div>
+        ) : (
+          <motion.div
+            key="content"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            <Navigation />
 
-      {/* Hero Section */}
+            {/* Hero Section */}
       <section id="hero" className="relative min-h-screen flex items-center justify-center pt-20">
         {/* Abstract Background Shapes */}
         <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] -z-10" />
@@ -223,16 +262,16 @@ export default function Home() {
              </div>
           ) : (
             <div className="space-y-12">
-              {Object.entries(groupedSkills || {}).map(([category, categorySkills]) => (
-                <div key={category}>
-                  <h3 className="text-2xl font-semibold mb-6 capitalize text-primary-foreground/80">{category}</h3>
-                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                    {categorySkills.map((skill, index) => (
-                      <SkillBadge key={skill.id} skill={skill} index={index} />
-                    ))}
-                  </div>
-                </div>
-              ))}
+                  {Object.entries(groupedSkills || {}).map(([category, categorySkills]: [string, any]) => (
+                    <div key={category}>
+                      <h3 className="text-2xl font-semibold mb-6 capitalize text-primary-foreground/80">{category}</h3>
+                      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                        {categorySkills.map((skill: any, index: number) => (
+                          <SkillBadge key={skill.id} skill={skill} index={index} />
+                        ))}
+                      </div>
+                    </div>
+                  ))}
             </div>
           )}
         </div>
@@ -366,17 +405,6 @@ export default function Home() {
                       <Linkedin size={18} />
                     </a>
                   )}
-                  {profile?.instagramUrl && (
-                    <a 
-                      href={profile.instagramUrl} 
-                      target="_blank" 
-                      rel="noopener noreferrer"
-                      className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300"
-                      data-testid="link-social-instagram"
-                    >
-                      <Instagram size={18} />
-                    </a>
-                  )}
                   {profile?.phone && (
                     <a 
                       href={`https://wa.me/${profile.phone.replace(/\D/g, '')}`} 
@@ -421,11 +449,13 @@ export default function Home() {
           <div className="flex gap-6 text-muted-foreground">
             {profile?.githubUrl && <a href={profile.githubUrl} className="hover:text-primary transition-colors" data-testid="link-github">GitHub</a>}
             {profile?.linkedinUrl && <a href={profile.linkedinUrl} className="hover:text-primary transition-colors" data-testid="link-linkedin">LinkedIn</a>}
-            {profile?.instagramUrl && <a href={profile.instagramUrl} className="hover:text-primary transition-colors" data-testid="link-instagram">Instagram</a>}
             <a href={`mailto:${profile?.email}`} className="hover:text-primary transition-colors" data-testid="link-email">Email</a>
           </div>
         </div>
       </footer>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }

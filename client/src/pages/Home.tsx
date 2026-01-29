@@ -119,12 +119,24 @@ export default function Home() {
             
             <div className="flex gap-8 mt-16 text-muted-foreground">
               {profile?.githubUrl && (
-                <a href={profile.githubUrl} className="hover:text-primary transition-all hover:scale-110" title="GitHub">
+                <a 
+                  href={profile.githubUrl.startsWith('http') ? profile.githubUrl : `https://${profile.githubUrl}`} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-primary transition-all hover:scale-110" 
+                  title="GitHub"
+                >
                   <Github size={22} />
                 </a>
               )}
               {profile?.linkedinUrl && (
-                <a href={profile.linkedinUrl} className="hover:text-primary transition-all hover:scale-110" title="LinkedIn">
+                <a 
+                  href={profile.linkedinUrl.startsWith('http') ? profile.linkedinUrl : `https://${profile.linkedinUrl}`} 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:text-primary transition-all hover:scale-110" 
+                  title="LinkedIn"
+                >
                   <Linkedin size={22} />
                 </a>
               )}
@@ -386,7 +398,7 @@ export default function Home() {
                 <div className="pt-8 flex gap-4">
                   {profile?.githubUrl && (
                     <a 
-                      href={profile.githubUrl} 
+                      href={profile.githubUrl.startsWith('http') ? profile.githubUrl : `https://${profile.githubUrl}`} 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300"
@@ -396,7 +408,7 @@ export default function Home() {
                   )}
                   {profile?.linkedinUrl && (
                     <a 
-                      href={profile.linkedinUrl} 
+                      href={profile.linkedinUrl.startsWith('http') ? profile.linkedinUrl : `https://${profile.linkedinUrl}`} 
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300"

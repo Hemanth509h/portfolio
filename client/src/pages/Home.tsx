@@ -7,12 +7,15 @@ import { SkillBadge } from "@/components/SkillBadge";
 import { ContactForm } from "@/components/ContactForm";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-
-import profileJpg from "@/assets/images/profile.jpg";
+import { useQuery } from "@tanstack/react-query";
+import { type Profile } from "@shared/schema";
 
 export default function Home() {
   const { data: skills, isLoading: skillsLoading } = useSkills();
   const { data: projects, isLoading: projectsLoading } = useProjects();
+  const { data: profile, isLoading: profileLoading } = useQuery<Profile>({
+    queryKey: ["/api/profile"],
+  });
 
   const groupedSkills = skills?.reduce((acc, skill) => {
     const category = skill.category || "Other";
@@ -20,6 +23,14 @@ export default function Home() {
     acc[category].push(skill);
     return acc;
   }, {} as Record<string, typeof skills>);
+
+  if (profileLoading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <Skeleton className="h-20 w-20 rounded-full" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-background text-foreground overflow-x-hidden selection:bg-primary/30">
@@ -44,8 +55,9 @@ export default function Home() {
               Building <span className="text-gradient-primary">Digital</span> <br />
               Experiences.
             </h1>
+            <h2 className="text-3xl font-bold mb-4">{profile?.name}</h2>
             <p className="text-xl text-muted-foreground mb-8 max-w-lg leading-relaxed">
-              I craft beautiful, high-performance websites and applications with modern technologies. Let's turn your vision into reality.
+              {profile?.aboutMe}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <Button size="lg" className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 h-14 text-base shadow-lg shadow-primary/25" asChild>
@@ -60,10 +72,9 @@ export default function Home() {
             </div>
             
             <div className="flex gap-6 mt-12 text-muted-foreground">
-              <a href="#" className="hover:text-primary transition-colors"><Github size={24} /></a>
-              <a href="#" className="hover:text-primary transition-colors"><Linkedin size={24} /></a>
-              <a href="#" className="hover:text-primary transition-colors"><Twitter size={24} /></a>
-              <a href="#" className="hover:text-primary transition-colors"><Mail size={24} /></a>
+              {profile?.githubUrl && <a href={profile.githubUrl} className="hover:text-primary transition-colors"><Github size={24} /></a>}
+              {profile?.linkedinUrl && <a href={profile.linkedinUrl} className="hover:text-primary transition-colors"><Linkedin size={24} /></a>}
+              <a href={`mailto:${profile?.email}`} className="hover:text-primary transition-colors"><Mail size={24} /></a>
             </div>
           </motion.div>
 
@@ -76,8 +87,8 @@ export default function Home() {
             <div className="relative z-10 rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-card/50 backdrop-blur-sm p-4 aspect-square max-w-md mx-auto transform rotate-3 hover:rotate-0 transition-transform duration-500">
                <div className="w-full h-full rounded-xl border border-white/5 overflow-hidden relative group">
                  <img 
-                   src={profileJpg} 
-                   alt="Profile" 
+                   src={profile?.photoUrl} 
+                   alt={profile?.name} 
                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100"
                  />
                  <div className="absolute inset-0 bg-primary/10 mix-blend-overlay group-hover:bg-transparent transition-colors duration-700" />
@@ -108,7 +119,7 @@ export default function Home() {
             >
               <div className="aspect-[4/5] rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative">
                 <img 
-                  src={profileJpg} 
+                  src={profile?.photoUrl} 
                   alt="About Me" 
                   className="w-full h-full object-cover"
                 />
@@ -125,20 +136,13 @@ export default function Home() {
             >
               <h2 className="text-4xl font-bold font-display mb-6">About Me</h2>
               <div className="w-20 h-1.5 bg-primary rounded-full mb-10" />
-              <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-                I'm a passionate Full Stack Developer with over 5 years of experience building web applications. 
-                My journey started with a curiosity for how things work on the internet, which evolved into a career 
-                crafting robust, scalable solutions.
-              </p>
               <p className="text-lg text-muted-foreground leading-relaxed mb-8">
-                I specialize in the React ecosystem, Node.js, and modern CSS frameworks. 
-                When I'm not coding, you can find me exploring new technologies, contributing to open source, 
-                or enjoying a good cup of coffee.
+                {profile?.aboutMe}
               </p>
               <div className="grid grid-cols-2 gap-6">
                 <div>
                   <h4 className="font-bold mb-2">Location</h4>
-                  <p className="text-muted-foreground">San Francisco, CA</p>
+                  <p className="text-muted-foreground">{profile?.location}</p>
                 </div>
                 <div>
                   <h4 className="font-bold mb-2">Experience</h4>

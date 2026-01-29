@@ -57,6 +57,20 @@ async function seedDatabase() {
       },
     ]);
   }
+
+  const existingProfile = await storage.getProfile();
+  if (!existingProfile) {
+    await storage.updateProfile({
+      name: "Your Name",
+      photoUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop",
+      aboutMe: "Brief description about yourself.",
+      email: "your.email@example.com",
+      phone: "+1 234 567 890",
+      location: "City, Country",
+      githubUrl: "https://github.com",
+      linkedinUrl: "https://linkedin.com",
+    });
+  }
 }
 
 export async function registerRoutes(
@@ -94,6 +108,56 @@ export async function registerRoutes(
       }
       throw err;
     }
+  });
+
+  // Profile Management
+  app.get("/api/profile", async (_req, res) => {
+    const p = await storage.getProfile();
+    res.json(p);
+  });
+
+  app.post("/api/profile", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    const p = await storage.updateProfile(req.body);
+    res.json(p);
+  });
+
+  // Skills Management
+  app.post("/api/skills", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    const s = await storage.createSkill(req.body);
+    res.json(s);
+  });
+
+  app.patch("/api/skills/:id", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    const s = await storage.updateSkill(Number(req.params.id), req.body);
+    res.json(s);
+  });
+
+  app.delete("/api/skills/:id", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    await storage.deleteSkill(Number(req.params.id));
+    res.sendStatus(204);
+  });
+
+  // Projects Management
+  app.post("/api/projects", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    const p = await storage.createProject(req.body);
+    res.json(p);
+  });
+
+  app.patch("/api/projects/:id", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    const p = await storage.updateProject(Number(req.params.id), req.body);
+    res.json(p);
+  });
+
+  app.delete("/api/projects/:id", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    await storage.deleteProject(Number(req.params.id));
+    res.sendStatus(204);
   });
 
   return httpServer;

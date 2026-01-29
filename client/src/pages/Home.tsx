@@ -1,0 +1,221 @@
+import { motion } from "framer-motion";
+import { ArrowRight, ChevronDown, Github, Linkedin, Twitter, Mail } from "lucide-react";
+import { useSkills, useProjects } from "@/hooks/use-portfolio";
+import { Navigation } from "@/components/Navigation";
+import { ProjectCard } from "@/components/ProjectCard";
+import { SkillBadge } from "@/components/SkillBadge";
+import { ContactForm } from "@/components/ContactForm";
+import { Button } from "@/components/ui/button";
+import { Skeleton } from "@/components/ui/skeleton";
+
+export default function Home() {
+  const { data: skills, isLoading: skillsLoading } = useSkills();
+  const { data: projects, isLoading: projectsLoading } = useProjects();
+
+  const groupedSkills = skills?.reduce((acc, skill) => {
+    const category = skill.category || "Other";
+    if (!acc[category]) acc[category] = [];
+    acc[category].push(skill);
+    return acc;
+  }, {} as Record<string, typeof skills>);
+
+  return (
+    <div className="min-h-screen bg-background text-foreground overflow-x-hidden selection:bg-primary/30">
+      <Navigation />
+
+      {/* Hero Section */}
+      <section id="hero" className="relative min-h-screen flex items-center justify-center pt-20">
+        {/* Abstract Background Shapes */}
+        <div className="absolute top-20 right-0 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] -z-10" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-secondary/10 rounded-full blur-[100px] -z-10" />
+
+        <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
+          <motion.div
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <div className="inline-block px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary-foreground font-medium mb-6">
+              Full Stack Developer
+            </div>
+            <h1 className="text-5xl md:text-7xl font-bold font-display leading-tight mb-6">
+              Building <span className="text-gradient-primary">Digital</span> <br />
+              Experiences.
+            </h1>
+            <p className="text-xl text-muted-foreground mb-8 max-w-lg leading-relaxed">
+              I craft beautiful, high-performance websites and applications with modern technologies. Let's turn your vision into reality.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4">
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 h-14 text-base shadow-lg shadow-primary/25" asChild>
+                <a href="#projects">
+                  View My Work
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </a>
+              </Button>
+              <Button size="lg" variant="outline" className="border-white/10 hover:bg-white/5 rounded-full px-8 h-14 text-base" asChild>
+                <a href="#contact">Contact Me</a>
+              </Button>
+            </div>
+            
+            <div className="flex gap-6 mt-12 text-muted-foreground">
+              <a href="#" className="hover:text-primary transition-colors"><Github size={24} /></a>
+              <a href="#" className="hover:text-primary transition-colors"><Linkedin size={24} /></a>
+              <a href="#" className="hover:text-primary transition-colors"><Twitter size={24} /></a>
+              <a href="#" className="hover:text-primary transition-colors"><Mail size={24} /></a>
+            </div>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="hidden md:block relative"
+          >
+            <div className="relative z-10 rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-card/50 backdrop-blur-sm p-6 aspect-square max-w-md mx-auto transform rotate-3 hover:rotate-0 transition-transform duration-500">
+               {/* Hero Image / Illustration Placeholder */}
+               {/* Using abstract shapes/gradients instead of stock photo for unique look */}
+               <div className="w-full h-full rounded-xl bg-gradient-to-br from-card via-background to-card border border-white/5 flex items-center justify-center overflow-hidden relative">
+                 <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
+                 <div className="w-32 h-32 bg-primary/30 rounded-full blur-3xl absolute top-1/4 left-1/4"></div>
+                 <div className="w-40 h-40 bg-secondary/20 rounded-full blur-3xl absolute bottom-1/4 right-1/4"></div>
+                 <div className="z-10 text-center space-y-2">
+                   <div className="text-6xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary opacity-50">CODE</div>
+                   <div className="text-6xl font-display font-bold text-foreground opacity-90">DESIGN</div>
+                   <div className="text-6xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-secondary to-primary opacity-50">BUILD</div>
+                 </div>
+               </div>
+            </div>
+          </motion.div>
+        </div>
+
+        <motion.div 
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 2 }}
+          className="absolute bottom-10 left-1/2 -translate-x-1/2 text-muted-foreground"
+        >
+          <ChevronDown size={32} />
+        </motion.div>
+      </section>
+
+      {/* About Section */}
+      <section id="about" className="py-32 relative bg-card/30">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            className="max-w-3xl mx-auto text-center"
+          >
+            <h2 className="text-4xl font-bold font-display mb-6">About Me</h2>
+            <div className="w-20 h-1.5 bg-primary mx-auto rounded-full mb-10" />
+            <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+              I'm a passionate Full Stack Developer with over 5 years of experience building web applications. 
+              My journey started with a curiosity for how things work on the internet, which evolved into a career 
+              crafting robust, scalable solutions.
+            </p>
+            <p className="text-lg text-muted-foreground leading-relaxed">
+              I specialize in the React ecosystem, Node.js, and modern CSS frameworks. 
+              When I'm not coding, you can find me exploring new technologies, contributing to open source, 
+              or enjoying a good cup of coffee.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Skills Section */}
+      <section id="skills" className="py-32">
+        <div className="container mx-auto px-4">
+          <div className="mb-16">
+            <h2 className="text-4xl font-bold font-display mb-4">Technical Arsenal</h2>
+            <p className="text-muted-foreground text-lg">Tools and technologies I use to bring ideas to life.</p>
+          </div>
+
+          {skillsLoading ? (
+             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+               {[1,2,3,4,5,6,7,8].map(i => <Skeleton key={i} className="h-16 w-full rounded-xl" />)}
+             </div>
+          ) : (
+            <div className="space-y-12">
+              {Object.entries(groupedSkills || {}).map(([category, categorySkills]) => (
+                <div key={category}>
+                  <h3 className="text-2xl font-semibold mb-6 capitalize text-primary-foreground/80">{category}</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                    {categorySkills.map((skill, index) => (
+                      <SkillBadge key={skill.id} skill={skill} index={index} />
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Projects Section */}
+      <section id="projects" className="py-32 bg-card/30">
+        <div className="container mx-auto px-4">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+            <div>
+              <h2 className="text-4xl font-bold font-display mb-4">Featured Projects</h2>
+              <p className="text-muted-foreground text-lg max-w-xl">
+                A selection of projects that showcase my skills and passion for development.
+              </p>
+            </div>
+            <Button variant="outline" className="border-white/10 hover:bg-white/5">
+              View All Projects <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
+
+          {projectsLoading ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {[1,2,3].map(i => <Skeleton key={i} className="h-[400px] w-full rounded-2xl" />)}
+            </div>
+          ) : (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {projects?.map((project, index) => (
+                <ProjectCard key={project.id} project={project} index={index} />
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Contact Section */}
+      <section id="contact" className="py-32 relative overflow-hidden">
+        {/* Decorative Background */}
+        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-transparent to-background/90 z-0 pointer-events-none" />
+        <div className="absolute -right-40 bottom-0 w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px] -z-10" />
+
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-16">
+              <h2 className="text-4xl font-bold font-display mb-6">Let's Work Together</h2>
+              <p className="text-xl text-muted-foreground">
+                Have a project in mind or just want to say hi? I'd love to hear from you.
+              </p>
+            </div>
+
+            <div className="bg-card/50 backdrop-blur-lg border border-white/5 rounded-3xl p-8 md:p-12 shadow-2xl">
+              <ContactForm />
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="py-12 border-t border-white/5">
+        <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-6">
+          <p className="text-muted-foreground">
+            © {new Date().getFullYear()} DevPortfolio. Built with React & Tailwind.
+          </p>
+          <div className="flex gap-6 text-muted-foreground">
+            <a href="#" className="hover:text-primary transition-colors">GitHub</a>
+            <a href="#" className="hover:text-primary transition-colors">LinkedIn</a>
+            <a href="#" className="hover:text-primary transition-colors">Twitter</a>
+          </div>
+        </div>
+      </footer>
+    </div>
+  );
+}

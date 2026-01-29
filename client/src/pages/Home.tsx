@@ -8,6 +8,8 @@ import { ContactForm } from "@/components/ContactForm";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 
+import profileJpg from "@/assets/images/profile.jpg";
+
 export default function Home() {
   const { data: skills, isLoading: skillsLoading } = useSkills();
   const { data: projects, isLoading: projectsLoading } = useProjects();
@@ -71,18 +73,14 @@ export default function Home() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="hidden md:block relative"
           >
-            <div className="relative z-10 rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-card/50 backdrop-blur-sm p-6 aspect-square max-w-md mx-auto transform rotate-3 hover:rotate-0 transition-transform duration-500">
-               {/* Hero Image / Illustration Placeholder */}
-               {/* Using abstract shapes/gradients instead of stock photo for unique look */}
-               <div className="w-full h-full rounded-xl bg-gradient-to-br from-card via-background to-card border border-white/5 flex items-center justify-center overflow-hidden relative">
-                 <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]"></div>
-                 <div className="w-32 h-32 bg-primary/30 rounded-full blur-3xl absolute top-1/4 left-1/4"></div>
-                 <div className="w-40 h-40 bg-secondary/20 rounded-full blur-3xl absolute bottom-1/4 right-1/4"></div>
-                 <div className="z-10 text-center space-y-2">
-                   <div className="text-6xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-primary to-secondary opacity-50">CODE</div>
-                   <div className="text-6xl font-display font-bold text-foreground opacity-90">DESIGN</div>
-                   <div className="text-6xl font-display font-bold text-transparent bg-clip-text bg-gradient-to-r from-secondary to-primary opacity-50">BUILD</div>
-                 </div>
+            <div className="relative z-10 rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-card/50 backdrop-blur-sm p-4 aspect-square max-w-md mx-auto transform rotate-3 hover:rotate-0 transition-transform duration-500">
+               <div className="w-full h-full rounded-xl border border-white/5 overflow-hidden relative group">
+                 <img 
+                   src={profileJpg} 
+                   alt="Profile" 
+                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100"
+                 />
+                 <div className="absolute inset-0 bg-primary/10 mix-blend-overlay group-hover:bg-transparent transition-colors duration-700" />
                </div>
             </div>
           </motion.div>
@@ -100,26 +98,55 @@ export default function Home() {
       {/* About Section */}
       <section id="about" className="py-32 relative bg-card/30">
         <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            viewport={{ once: true }}
-            className="max-w-3xl mx-auto text-center"
-          >
-            <h2 className="text-4xl font-bold font-display mb-6">About Me</h2>
-            <div className="w-20 h-1.5 bg-primary mx-auto rounded-full mb-10" />
-            <p className="text-lg text-muted-foreground leading-relaxed mb-6">
-              I'm a passionate Full Stack Developer with over 5 years of experience building web applications. 
-              My journey started with a curiosity for how things work on the internet, which evolved into a career 
-              crafting robust, scalable solutions.
-            </p>
-            <p className="text-lg text-muted-foreground leading-relaxed">
-              I specialize in the React ecosystem, Node.js, and modern CSS frameworks. 
-              When I'm not coding, you can find me exploring new technologies, contributing to open source, 
-              or enjoying a good cup of coffee.
-            </p>
-          </motion.div>
+          <div className="grid md:grid-cols-2 gap-16 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              className="relative"
+            >
+              <div className="aspect-[4/5] rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative">
+                <img 
+                  src={profileJpg} 
+                  alt="About Me" 
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
+              </div>
+              <div className="absolute -bottom-6 -right-6 w-32 h-32 bg-primary/20 rounded-full blur-3xl -z-10" />
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-4xl font-bold font-display mb-6">About Me</h2>
+              <div className="w-20 h-1.5 bg-primary rounded-full mb-10" />
+              <p className="text-lg text-muted-foreground leading-relaxed mb-6">
+                I'm a passionate Full Stack Developer with over 5 years of experience building web applications. 
+                My journey started with a curiosity for how things work on the internet, which evolved into a career 
+                crafting robust, scalable solutions.
+              </p>
+              <p className="text-lg text-muted-foreground leading-relaxed mb-8">
+                I specialize in the React ecosystem, Node.js, and modern CSS frameworks. 
+                When I'm not coding, you can find me exploring new technologies, contributing to open source, 
+                or enjoying a good cup of coffee.
+              </p>
+              <div className="grid grid-cols-2 gap-6">
+                <div>
+                  <h4 className="font-bold mb-2">Location</h4>
+                  <p className="text-muted-foreground">San Francisco, CA</p>
+                </div>
+                <div>
+                  <h4 className="font-bold mb-2">Experience</h4>
+                  <p className="text-muted-foreground">5+ Years</p>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </section>
 

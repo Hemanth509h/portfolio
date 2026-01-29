@@ -32,10 +32,15 @@ export default function AdminLogin() {
   async function onSubmit(values: any) {
     setLoading(true);
     try {
+      const loginPayload = {
+        username: "admin", // Automatically use admin username
+        password: values.password,
+      };
+
       const res = await fetch("/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
+        body: JSON.stringify(loginPayload),
       });
 
       if (res.ok) {
@@ -68,19 +73,6 @@ export default function AdminLogin() {
         <CardContent>
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-              <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Username</FormLabel>
-                    <FormControl>
-                      <Input {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
               <FormField
                 control={form.control}
                 name="password"

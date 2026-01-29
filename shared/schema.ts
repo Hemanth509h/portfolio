@@ -4,6 +4,24 @@ import { z } from "zod";
 
 // === TABLE DEFINITIONS ===
 
+export const users = pgTable("users", {
+  id: serial("id").primaryKey(),
+  username: text("username").notNull().unique(),
+  password: text("password").notNull(),
+});
+
+export const profile = pgTable("profile", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  photoUrl: text("photo_url").notNull(),
+  aboutMe: text("about_me").notNull(),
+  email: text("email").notNull(),
+  phone: text("phone"),
+  location: text("location"),
+  githubUrl: text("github_url"),
+  linkedinUrl: text("linkedin_url"),
+});
+
 export const skills = pgTable("skills", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
@@ -31,11 +49,19 @@ export const messages = pgTable("messages", {
 
 // === SCHEMAS ===
 
+export const insertUserSchema = createInsertSchema(users).omit({ id: true });
+export const insertProfileSchema = createInsertSchema(profile).omit({ id: true });
 export const insertSkillSchema = createInsertSchema(skills).omit({ id: true });
 export const insertProjectSchema = createInsertSchema(projects).omit({ id: true });
 export const insertMessageSchema = createInsertSchema(messages).omit({ id: true, createdAt: true });
 
 // === TYPES ===
+
+export type User = typeof users.$inferSelect;
+export type InsertUser = z.infer<typeof insertUserSchema>;
+
+export type Profile = typeof profile.$inferSelect;
+export type InsertProfile = z.infer<typeof insertProfileSchema>;
 
 export type Skill = typeof skills.$inferSelect;
 export type InsertSkill = z.infer<typeof insertSkillSchema>;

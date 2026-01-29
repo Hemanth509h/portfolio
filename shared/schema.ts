@@ -20,6 +20,7 @@ export const profile = pgTable("profile", {
   location: text("location"),
   githubUrl: text("github_url"),
   linkedinUrl: text("linkedin_url"),
+  resumeUrl: text("resume_url"),
 });
 
 export const skills = pgTable("skills", {

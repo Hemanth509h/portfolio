@@ -288,6 +288,19 @@ function ProfileForm({ defaultValues, onSubmit, loading }: any) {
             </FormItem>
           )}
         />
+        <FormField
+          control={form.control}
+          name="resumeUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Resume URL</FormLabel>
+              <FormControl>
+                <Input {...field} placeholder="Link to your resume (e.g., Google Drive or PDF link)" />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <div className="grid grid-cols-2 gap-4">
           <FormField
             control={form.control}

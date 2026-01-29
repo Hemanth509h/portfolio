@@ -69,6 +69,7 @@ async function seedDatabase() {
       location: "City, Country",
       githubUrl: "https://github.com",
       linkedinUrl: "https://linkedin.com",
+      resumeUrl: "#",
     });
   }
 }

@@ -22,8 +22,13 @@ export function ContactForm() {
   });
 
   function onSubmit(data: InsertMessage) {
+    // Save to database first
     mutation.mutate(data, {
       onSuccess: () => {
+        // After successful save, open mailto link
+        const subject = encodeURIComponent(`New Message from ${data.name}`);
+        const body = encodeURIComponent(`Name: ${data.name}\nEmail: ${data.email}\n\nMessage:\n${data.message}`);
+        window.location.href = `mailto:peddaboinahemanthkumar@gmail.com?subject=${subject}&body=${body}`;
         form.reset();
       },
     });

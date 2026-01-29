@@ -5,8 +5,17 @@ import { api } from "@shared/routes";
 import { z } from "zod";
 import { db } from "./db";
 import { skills, projects } from "@shared/schema";
+import { setupAuth } from "./auth";
 
 async function seedDatabase() {
+  const existingUsers = await storage.getUserByUsername("admin");
+  if (!existingUsers) {
+    await storage.createUser({
+      username: "admin",
+      password: "password", // In production, this should be an env var and hashed!
+    });
+  }
+
   const existingSkills = await storage.getSkills();
   if (existingSkills.length === 0) {
     await db.insert(skills).values([
@@ -55,6 +64,9 @@ export async function registerRoutes(
   app: Express
 ): Promise<Server> {
   
+  // Setup authentication
+  setupAuth(app);
+
   // Seed data on startup
   seedDatabase();
 

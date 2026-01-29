@@ -18,7 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Loader2, Trash2, Edit2 } from "lucide-react";
+import { ArrowLeft, Loader2, Trash2, Edit2, ArrowUp, ArrowDown } from "lucide-react";
 
 export default function AdminDashboard() {
   const [, setLocation] = useLocation();
@@ -104,6 +104,35 @@ export default function AdminDashboard() {
       toast({ title: "Project updated" });
     },
   });
+
+  const updateOrderMutation = useMutation({
+    mutationFn: async (orders: { id: number; order: number }[]) => {
+      const res = await fetch("/api/projects/order", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ orders }),
+      });
+      return res;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/projects"] });
+      toast({ title: "Order updated" });
+    },
+  });
+
+  const moveProject = (index: number, direction: 'up' | 'down') => {
+    if (!projects) return;
+    const newProjects = [...projects];
+    const targetIndex = direction === 'up' ? index - 1 : index + 1;
+    if (targetIndex < 0 || targetIndex >= newProjects.length) return;
+
+    const temp = newProjects[index];
+    newProjects[index] = newProjects[targetIndex];
+    newProjects[targetIndex] = temp;
+
+    const orders = newProjects.map((p, i) => ({ id: p.id, order: i + 1 }));
+    updateOrderMutation.mutate(orders);
+  };
 
   const deleteSkillMutation = useMutation({
     mutationFn: async (id: number) => {
@@ -250,10 +279,30 @@ export default function AdminDashboard() {
               </CardContent>
             </Card>
             <div className="grid gap-4">
-              {projects?.map((project) => (
+              {projects?.map((project, index) => (
                 <Card key={project.id}>
                   <CardContent className="flex justify-between items-center p-4">
                     <div className="flex items-center gap-4">
+                      <div className="flex flex-col gap-1">
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8"
+                          onClick={() => moveProject(index, 'up')}
+                          disabled={index === 0 || updateOrderMutation.isPending}
+                        >
+                          <ArrowUp className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="icon"
+                          className="h-8 w-8"
+                          onClick={() => moveProject(index, 'down')}
+                          disabled={index === projects.length - 1 || updateOrderMutation.isPending}
+                        >
+                          <ArrowDown className="h-4 w-4" />
+                        </Button>
+                      </div>
                       {project.imageUrl && (
                         <div className="w-12 h-12 rounded bg-muted/20 overflow-hidden">
                           <img
@@ -583,6 +632,7 @@ function ProjectForm({ defaultValues, onSubmit, loading }: any) {
       projectUrl: "",
       repoUrl: "",
       tags: [],
+      order: 0,
     },
   });
 

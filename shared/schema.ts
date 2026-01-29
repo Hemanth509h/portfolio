@@ -34,6 +34,7 @@ export interface Project {
   projectUrl: string | null;
   repoUrl: string | null;
   tags: string[];
+  order: number;
 }
 
 export interface Message {
@@ -74,6 +75,7 @@ export const insertProjectSchema = z.object({
   projectUrl: z.string().nullable().optional(),
   repoUrl: z.string().nullable().optional(),
   tags: z.array(z.string()),
+  order: z.number().optional().default(0),
 });
 
 export const insertMessageSchema = z.object({

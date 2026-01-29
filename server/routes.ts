@@ -105,6 +105,19 @@ export async function registerRoutes(
     res.json(p);
   });
 
+  app.put("/api/projects/order", async (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    const { orders } = req.body; // [{ id: number, order: number }]
+    for (const item of orders) {
+      const existing = await storage.getProjects();
+      const project = existing.find(p => p.id === item.id);
+      if (project) {
+        await storage.updateProject(item.id, { ...project, order: item.order });
+      }
+    }
+    res.sendStatus(200);
+  });
+
   app.delete("/api/projects/:id", async (req, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);
     await storage.deleteProject(Number(req.params.id));

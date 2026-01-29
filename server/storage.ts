@@ -102,6 +102,7 @@ export class DatabaseStorage implements IStorage {
           projectUrl: "#",
           repoUrl: "#",
           tags: ["React", "Node.js", "Stripe"],
+          order: 1,
         },
         {
           id: 2,
@@ -111,6 +112,7 @@ export class DatabaseStorage implements IStorage {
           projectUrl: "#",
           repoUrl: "#",
           tags: ["TypeScript", "Socket.io", "Postgres"],
+          order: 2,
         },
         {
           id: 3,
@@ -120,6 +122,7 @@ export class DatabaseStorage implements IStorage {
           projectUrl: "#",
           repoUrl: "#",
           tags: ["React", "D3.js", "API"],
+          order: 3,
         },
       ];
       await db.collection("projects").insertMany(defaultProjects);
@@ -216,7 +219,7 @@ export class DatabaseStorage implements IStorage {
 
   async getProjects(): Promise<Project[]> {
     const db = await getDb();
-    const projects = await db.collection("projects").find({}).toArray();
+    const projects = await db.collection("projects").find({}).sort({ order: 1 }).toArray();
     return projects.map(p => ({
       id: p.id,
       title: p.title,
@@ -225,6 +228,7 @@ export class DatabaseStorage implements IStorage {
       projectUrl: p.projectUrl,
       repoUrl: p.repoUrl,
       tags: p.tags,
+      order: p.order ?? 0,
     }));
   }
 

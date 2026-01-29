@@ -3,8 +3,6 @@ import type { Server } from "http";
 import { storage } from "./storage";
 import { api } from "@shared/routes";
 import { z } from "zod";
-import { db } from "./db";
-import { skills, projects, profile } from "@shared/schema";
 import { setupAuth } from "./auth";
 import multer from "multer";
 import path from "path";
@@ -30,68 +28,13 @@ const upload = multer({
 });
 
 async function seedDatabase() {
+  await storage.initialize();
+  
   const existingUsers = await storage.getUserByUsername("admin");
   if (!existingUsers) {
     await storage.createUser({
       username: "admin",
-      password: "admin123", // Updated password as requested
-    });
-  }
-
-  const existingSkills = await storage.getSkills();
-  if (existingSkills.length === 0) {
-    await db.insert(skills).values([
-      { name: "React", category: "Frontend", proficiency: 90 },
-      { name: "TypeScript", category: "Language", proficiency: 85 },
-      { name: "Node.js", category: "Backend", proficiency: 80 },
-      { name: "PostgreSQL", category: "Database", proficiency: 75 },
-      { name: "Tailwind CSS", category: "Frontend", proficiency: 95 },
-      { name: "Docker", category: "Tools", proficiency: 70 },
-    ]);
-  }
-
-  const existingProjects = await storage.getProjects();
-  if (existingProjects.length === 0) {
-    await db.insert(projects).values([
-      {
-        title: "E-Commerce Platform",
-        description: "A full-featured online store with cart, checkout, and admin dashboard.",
-        imageUrl: "https://images.unsplash.com/photo-1557821552-17105176677c?w=800&q=80",
-        projectUrl: "#",
-        repoUrl: "#",
-        tags: ["React", "Node.js", "Stripe"],
-      },
-      {
-        title: "Task Management App",
-        description: "Collaborative project management tool with real-time updates.",
-        imageUrl: "https://images.unsplash.com/photo-1540350394557-8d14678e7f91?w=800&q=80",
-        projectUrl: "#",
-        repoUrl: "#",
-        tags: ["TypeScript", "Socket.io", "Postgres"],
-      },
-      {
-        title: "Weather Dashboard",
-        description: "Real-time weather data visualization using third-party APIs.",
-        imageUrl: "https://images.unsplash.com/photo-1592210454359-9043f067919b?w=800&q=80",
-        projectUrl: "#",
-        repoUrl: "#",
-        tags: ["React", "D3.js", "API"],
-      },
-    ]);
-  }
-
-  const existingProfile = await storage.getProfile();
-  if (!existingProfile) {
-    await storage.updateProfile({
-      name: "Your Name",
-      photoUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop",
-      aboutMe: "Brief description about yourself.",
-      email: "your.email@example.com",
-      phone: "+1 234 567 890",
-      location: "City, Country",
-      githubUrl: "https://github.com",
-      linkedinUrl: "https://linkedin.com",
-      resumeUrl: "#",
+      password: "admin123",
     });
   }
 }
@@ -101,11 +44,9 @@ export async function registerRoutes(
   app: Express
 ): Promise<Server> {
   
-  // Setup authentication
   setupAuth(app);
 
-  // Seed data on startup
-  seedDatabase();
+  await seedDatabase();
 
   app.get(api.skills.list.path, async (_req, res) => {
     const result = await storage.getSkills();
@@ -133,7 +74,6 @@ export async function registerRoutes(
     }
   });
 
-  // Profile Management
   app.get("/api/profile", async (_req, res) => {
     const p = await storage.getProfile();
     res.json(p);
@@ -145,7 +85,6 @@ export async function registerRoutes(
     res.json(p);
   });
 
-  // Skills Management
   app.post("/api/skills", async (req, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);
     const s = await storage.createSkill(req.body);
@@ -164,7 +103,6 @@ export async function registerRoutes(
     res.sendStatus(204);
   });
 
-  // Projects Management
   app.post("/api/projects", async (req, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);
     const p = await storage.createProject(req.body);
@@ -183,7 +121,6 @@ export async function registerRoutes(
     res.sendStatus(204);
   });
 
-  // File Uploads
   app.post("/api/upload", upload.single("file"), (req: MulterRequest, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);
     if (!req.file) return res.status(400).send("No file uploaded.");

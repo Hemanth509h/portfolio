@@ -1,74 +1,89 @@
-import { pgTable, text, serial, integer, boolean, timestamp } from "drizzle-orm/pg-core";
-import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
-// === TABLE DEFINITIONS ===
+export interface User {
+  id: number;
+  username: string;
+  password: string;
+}
 
-export const users = pgTable("users", {
-  id: serial("id").primaryKey(),
-  username: text("username").notNull().unique(),
-  password: text("password").notNull(),
+export interface Profile {
+  id: number;
+  name: string;
+  photoUrl: string | null;
+  resumeUrl: string | null;
+  aboutMe: string;
+  email: string;
+  phone: string | null;
+  location: string | null;
+  githubUrl: string | null;
+  linkedinUrl: string | null;
+}
+
+export interface Skill {
+  id: number;
+  name: string;
+  category: string;
+  proficiency: number;
+}
+
+export interface Project {
+  id: number;
+  title: string;
+  description: string;
+  imageUrl: string;
+  projectUrl: string | null;
+  repoUrl: string | null;
+  tags: string[];
+}
+
+export interface Message {
+  id: number;
+  name: string;
+  email: string;
+  message: string;
+  createdAt: Date | null;
+}
+
+export const insertUserSchema = z.object({
+  username: z.string().min(1),
+  password: z.string().min(1),
 });
 
-export const profile = pgTable("profile", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  photoUrl: text("photo_url"),
-  resumeUrl: text("resume_url"),
-  aboutMe: text("about_me").notNull(),
-  email: text("email").notNull(),
-  phone: text("phone"),
-  location: text("location"),
-  githubUrl: text("github_url"),
-  linkedinUrl: text("linkedin_url"),
+export const insertProfileSchema = z.object({
+  name: z.string().min(1),
+  photoUrl: z.string().nullable().optional(),
+  resumeUrl: z.string().nullable().optional(),
+  aboutMe: z.string().min(1),
+  email: z.string().email(),
+  phone: z.string().nullable().optional(),
+  location: z.string().nullable().optional(),
+  githubUrl: z.string().nullable().optional(),
+  linkedinUrl: z.string().nullable().optional(),
 });
 
-export const skills = pgTable("skills", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  category: text("category").notNull(), // 'frontend', 'backend', 'tools'
-  proficiency: integer("proficiency").notNull(), // 0-100
+export const insertSkillSchema = z.object({
+  name: z.string().min(1),
+  category: z.string().min(1),
+  proficiency: z.number().min(0).max(100),
 });
 
-export const projects = pgTable("projects", {
-  id: serial("id").primaryKey(),
-  title: text("title").notNull(),
-  description: text("description").notNull(),
-  imageUrl: text("image_url").notNull(),
-  projectUrl: text("project_url"),
-  repoUrl: text("repo_url"),
-  tags: text("tags").array().notNull(), // PostgreSQL array of text
+export const insertProjectSchema = z.object({
+  title: z.string().min(1),
+  description: z.string().min(1),
+  imageUrl: z.string().min(1),
+  projectUrl: z.string().nullable().optional(),
+  repoUrl: z.string().nullable().optional(),
+  tags: z.array(z.string()),
 });
 
-export const messages = pgTable("messages", {
-  id: serial("id").primaryKey(),
-  name: text("name").notNull(),
-  email: text("email").notNull(),
-  message: text("message").notNull(),
-  createdAt: timestamp("created_at").defaultNow(),
+export const insertMessageSchema = z.object({
+  name: z.string().min(1),
+  email: z.string().email(),
+  message: z.string().min(1),
 });
 
-// === SCHEMAS ===
-
-export const insertUserSchema = createInsertSchema(users).omit({ id: true });
-export const insertProfileSchema = createInsertSchema(profile).omit({ id: true });
-export const insertSkillSchema = createInsertSchema(skills).omit({ id: true });
-export const insertProjectSchema = createInsertSchema(projects).omit({ id: true });
-export const insertMessageSchema = createInsertSchema(messages).omit({ id: true, createdAt: true });
-
-// === TYPES ===
-
-export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
-
-export type Profile = typeof profile.$inferSelect;
 export type InsertProfile = z.infer<typeof insertProfileSchema>;
-
-export type Skill = typeof skills.$inferSelect;
 export type InsertSkill = z.infer<typeof insertSkillSchema>;
-
-export type Project = typeof projects.$inferSelect;
 export type InsertProject = z.infer<typeof insertProjectSchema>;
-
-export type Message = typeof messages.$inferSelect;
 export type InsertMessage = z.infer<typeof insertMessageSchema>;

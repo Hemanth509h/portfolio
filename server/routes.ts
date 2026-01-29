@@ -30,7 +30,7 @@ async function seedDatabase() {
   if (!existingUsers) {
     await storage.createUser({
       username: "admin",
-      password: "password", // In production, this should be an env var and hashed!
+      password: "admin123", // Updated password as requested
     });
   }
 

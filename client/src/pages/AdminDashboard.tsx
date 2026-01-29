@@ -255,11 +255,14 @@ export default function AdminDashboard() {
                   <CardContent className="flex justify-between items-center p-4">
                     <div className="flex items-center gap-4">
                       {project.imageUrl && (
-                        <img
-                          src={project.imageUrl}
-                          alt={project.title}
-                          className="w-12 h-12 rounded object-cover"
-                        />
+                        <div className="w-12 h-12 rounded bg-muted/20 overflow-hidden">
+                          <img
+                            src={project.imageUrl}
+                            alt={project.title}
+                            loading="lazy"
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
                       )}
                       <span className="font-bold">{project.title}</span>
                     </div>

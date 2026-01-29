@@ -19,11 +19,16 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       viewport={{ once: true }}
     >
       <Card className="h-full overflow-hidden border-border/50 bg-card/40 hover:bg-card/60 transition-colors group flex flex-col">
-        <div className="relative aspect-video overflow-hidden">
+        <div className="relative aspect-video overflow-hidden bg-muted/20">
           <img 
             src={project.imageUrl} 
             alt={project.title}
+            loading="lazy"
+            decoding="async"
             className="object-cover w-full h-full transform transition-transform duration-500 group-hover:scale-105"
+            onLoad={(e) => {
+              (e.target as HTMLImageElement).classList.add('opacity-100');
+            }}
           />
           <div className="absolute inset-0 bg-gradient-to-t from-background/90 to-transparent opacity-60" />
         </div>

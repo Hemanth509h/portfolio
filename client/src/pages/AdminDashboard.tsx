@@ -312,20 +312,35 @@ function ProfileForm({ defaultValues, onSubmit, loading }: any) {
     if (field === "photoUrl") setUploadingPhoto(true);
     else setUploadingResume(true);
 
-    const formData = new FormData();
-    formData.append("file", file);
-
     try {
-      const res = await fetch("/api/upload", {
+      const urlRes = await fetch("/api/uploads/request-url", {
         method: "POST",
-        body: formData,
+        headers: { "Content-Type": "application/json" },
         credentials: "include",
+        body: JSON.stringify({
+          name: file.name,
+          size: file.size,
+          contentType: file.type,
+        }),
       });
-      if (res.ok) {
-        const data = await res.json();
-        form.setValue(field, data.url);
+      
+      if (!urlRes.ok) {
+        console.error("Failed to get upload URL:", urlRes.status);
+        return;
+      }
+      
+      const { uploadURL, objectPath } = await urlRes.json();
+      
+      const uploadRes = await fetch(uploadURL, {
+        method: "PUT",
+        body: file,
+        headers: { "Content-Type": file.type },
+      });
+      
+      if (uploadRes.ok) {
+        form.setValue(field, objectPath);
       } else {
-        console.error("Upload failed with status:", res.status);
+        console.error("Upload failed with status:", uploadRes.status);
       }
     } catch (error) {
       console.error("Upload failed", error);
@@ -578,20 +593,36 @@ function ProjectForm({ defaultValues, onSubmit, loading }: any) {
     if (!file) return;
 
     setUploadingImage(true);
-    const formData = new FormData();
-    formData.append("file", file);
 
     try {
-      const res = await fetch("/api/upload", {
+      const urlRes = await fetch("/api/uploads/request-url", {
         method: "POST",
-        body: formData,
+        headers: { "Content-Type": "application/json" },
         credentials: "include",
+        body: JSON.stringify({
+          name: file.name,
+          size: file.size,
+          contentType: file.type,
+        }),
       });
-      if (res.ok) {
-        const data = await res.json();
-        form.setValue("imageUrl", data.url);
+      
+      if (!urlRes.ok) {
+        console.error("Failed to get upload URL:", urlRes.status);
+        return;
+      }
+      
+      const { uploadURL, objectPath } = await urlRes.json();
+      
+      const uploadRes = await fetch(uploadURL, {
+        method: "PUT",
+        body: file,
+        headers: { "Content-Type": file.type },
+      });
+      
+      if (uploadRes.ok) {
+        form.setValue("imageUrl", objectPath);
       } else {
-        console.error("Upload failed with status:", res.status);
+        console.error("Upload failed with status:", uploadRes.status);
       }
     } catch (error) {
       console.error("Upload failed", error);

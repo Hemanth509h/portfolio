@@ -6,6 +6,7 @@ import { z } from "zod";
 import { setupAuth } from "./auth";
 import multer from "multer";
 import { uploadFileToGridFS, getFileFromGridFS } from "./gridfs";
+import { registerObjectStorageRoutes } from "./replit_integrations/object_storage";
 
 interface MulterRequest extends Request {
   file?: Express.Multer.File;
@@ -33,6 +34,7 @@ export async function registerRoutes(
 ): Promise<Server> {
   
   setupAuth(app);
+  registerObjectStorageRoutes(app);
 
   await seedDatabase();
 

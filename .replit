@@ -49,3 +49,4 @@ expertMode = true
 
 [userenv.shared]
 MONGODB_URI = "mongodb+srv://phemanthkumar746:htnameh509h@data.psr09.mongodb.net/?appName=Data"
+PRIVATE_OBJECT_DIR = "/portfolio-uploads"

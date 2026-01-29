@@ -1,4 +1,4 @@
-import express, { type Express } from "express";
+import express, { type Express, type Request } from "express";
 import type { Server } from "http";
 import { storage } from "./storage";
 import { api } from "@shared/routes";
@@ -10,6 +10,10 @@ import multer from "multer";
 import path from "path";
 import fs from "fs";
 
+interface MulterRequest extends Request {
+  file?: Express.Multer.File;
+}
+
 const storage_dir = "uploads";
 if (!fs.existsSync(storage_dir)) {
   fs.mkdirSync(storage_dir);
@@ -18,7 +22,7 @@ if (!fs.existsSync(storage_dir)) {
 const upload = multer({
   storage: multer.diskStorage({
     destination: storage_dir,
-    filename: (_req, file, cb) => {
+    filename: (_req: any, file: any, cb: any) => {
       const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
       cb(null, file.fieldname + "-" + uniqueSuffix + path.extname(file.originalname));
     },
@@ -180,7 +184,7 @@ export async function registerRoutes(
   });
 
   // File Uploads
-  app.post("/api/upload", upload.single("file"), (req, res) => {
+  app.post("/api/upload", upload.single("file"), (req: MulterRequest, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);
     if (!req.file) return res.status(400).send("No file uploaded.");
     res.json({ url: `/uploads/${req.file.filename}` });

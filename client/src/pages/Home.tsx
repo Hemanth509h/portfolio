@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight, ChevronDown, Github, Linkedin, Twitter, Mail, Phone, MapPin, MessageCircle } from "lucide-react";
+import { ArrowRight, ChevronDown, Github, Linkedin, Twitter, Mail, Phone, MapPin, MessageCircle, Instagram } from "lucide-react";
 import { useSkills, useProjects } from "@/hooks/use-portfolio";
 import { Navigation } from "@/components/Navigation";
 import { ProjectCard } from "@/components/ProjectCard";
@@ -317,6 +317,16 @@ export default function Home() {
                       <Linkedin size={18} />
                     </a>
                   )}
+                  {profile?.instagramUrl && (
+                    <a 
+                      href={profile.instagramUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300"
+                    >
+                      <Instagram size={18} />
+                    </a>
+                  )}
                   {profile?.phone && (
                     <a 
                       href={`https://wa.me/${profile.phone.replace(/\D/g, '')}`} 
@@ -345,9 +355,10 @@ export default function Home() {
             © {new Date().getFullYear()} DevPortfolio. Built with React & Tailwind.
           </p>
           <div className="flex gap-6 text-muted-foreground">
-            <a href="#" className="hover:text-primary transition-colors">GitHub</a>
-            <a href="#" className="hover:text-primary transition-colors">LinkedIn</a>
-            <a href="#" className="hover:text-primary transition-colors">Twitter</a>
+            {profile?.githubUrl && <a href={profile.githubUrl} className="hover:text-primary transition-colors">GitHub</a>}
+            {profile?.linkedinUrl && <a href={profile.linkedinUrl} className="hover:text-primary transition-colors">LinkedIn</a>}
+            {profile?.instagramUrl && <a href={profile.instagramUrl} className="hover:text-primary transition-colors">Instagram</a>}
+            <a href={`mailto:${profile?.email}`} className="hover:text-primary transition-colors">Email</a>
           </div>
         </div>
       </footer>

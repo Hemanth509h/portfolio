@@ -426,6 +426,19 @@ function ProfileForm({ defaultValues, onSubmit, loading }: any) {
             )}
           />
         </div>
+        <FormField
+          control={form.control}
+          name="instagramUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Instagram URL</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <Button type="submit" disabled={loading}>
           {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
           Update Profile

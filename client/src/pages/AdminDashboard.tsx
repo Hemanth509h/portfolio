@@ -18,12 +18,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Loader2, Trash2 } from "lucide-react";
+import { ArrowLeft, Loader2, Trash2, Edit2 } from "lucide-react";
 
 export default function AdminDashboard() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const queryClient = useQueryClient();
+
+  const [editingProject, setEditingProject] = useState<Project | null>(null);
 
   const { data: user, isLoading: userLoading } = useQuery({
     queryKey: ["/api/user"],
@@ -84,6 +86,22 @@ export default function AdminDashboard() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/projects"] });
       toast({ title: "Project added" });
+    },
+  });
+
+  const updateProjectMutation = useMutation({
+    mutationFn: async ({ id, values }: { id: number; values: any }) => {
+      const res = await fetch(`/api/projects/${id}`, {
+        method: "PATCH",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
+      });
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/projects"] });
+      setEditingProject(null);
+      toast({ title: "Project updated" });
     },
   });
 
@@ -208,13 +226,26 @@ export default function AdminDashboard() {
         <TabsContent value="projects">
           <div className="space-y-8">
             <Card>
-              <CardHeader>
-                <CardTitle>Add Project</CardTitle>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <CardTitle>{editingProject ? "Edit Project" : "Add Project"}</CardTitle>
+                {editingProject && (
+                  <Button variant="ghost" onClick={() => setEditingProject(null)}>
+                    Cancel
+                  </Button>
+                )}
               </CardHeader>
               <CardContent>
                 <ProjectForm
-                  onSubmit={(v: any) => projectMutation.mutate(v)}
-                  loading={projectMutation.isPending}
+                  key={editingProject?.id || "new"}
+                  defaultValues={editingProject || undefined}
+                  onSubmit={(v: any) => {
+                    if (editingProject) {
+                      updateProjectMutation.mutate({ id: editingProject.id, values: v });
+                    } else {
+                      projectMutation.mutate(v);
+                    }
+                  }}
+                  loading={projectMutation.isPending || updateProjectMutation.isPending}
                 />
               </CardContent>
             </Card>
@@ -232,13 +263,25 @@ export default function AdminDashboard() {
                       )}
                       <span className="font-bold">{project.title}</span>
                     </div>
-                    <Button
-                      variant="destructive"
-                      size="icon"
-                      onClick={() => deleteProjectMutation.mutate(project.id)}
-                    >
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        size="icon"
+                        onClick={() => {
+                          setEditingProject(project);
+                          window.scrollTo({ top: 0, behavior: 'smooth' });
+                        }}
+                      >
+                        <Edit2 className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="destructive"
+                        size="icon"
+                        onClick={() => deleteProjectMutation.mutate(project.id)}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </div>
                   </CardContent>
                 </Card>
               ))}
@@ -512,10 +555,10 @@ function SkillForm({ onSubmit, loading }: any) {
   );
 }
 
-function ProjectForm({ onSubmit, loading }: any) {
+function ProjectForm({ defaultValues, onSubmit, loading }: any) {
   const form = useForm({
     resolver: zodResolver(insertProjectSchema),
-    defaultValues: {
+    defaultValues: defaultValues || {
       title: "",
       description: "",
       imageUrl: "",
@@ -655,7 +698,7 @@ function ProjectForm({ onSubmit, loading }: any) {
         />
         <Button type="submit" disabled={loading}>
           {loading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
-          Add Project
+          {defaultValues ? "Update Project" : "Add Project"}
         </Button>
       </form>
     </Form>

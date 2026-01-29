@@ -18,7 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Loader2, Trash2, Edit2, ArrowUp, ArrowDown } from "lucide-react";
+import { ArrowLeft, Loader2, Trash2, Edit2, ArrowUp, ArrowDown, FileText, Eye } from "lucide-react";
 
 export default function AdminDashboard() {
   const [, setLocation] = useLocation();
@@ -422,14 +422,27 @@ function ProfileForm({ defaultValues, onSubmit, loading }: any) {
             <FormItem>
               <FormLabel>Photo</FormLabel>
               <FormControl>
-                <div className="flex gap-4 items-center">
-                  <Input 
-                    type="file" 
-                    accept="image/*"
-                    onChange={(e) => handleFileUpload(e, "photoUrl")} 
-                    disabled={uploadingPhoto} 
-                  />
-                  {field.value && <img src={field.value} className="w-10 h-10 rounded object-cover" />}
+                <div className="flex flex-col gap-4">
+                  <div className="flex gap-4 items-center">
+                    <Input 
+                      type="file" 
+                      accept="image/*"
+                      onChange={(e) => handleFileUpload(e, "photoUrl")} 
+                      disabled={uploadingPhoto} 
+                    />
+                    {field.value && (
+                      <Button variant="outline" size="icon" asChild>
+                        <a href={field.value} target="_blank" rel="noopener noreferrer">
+                          <Eye className="h-4 w-4" />
+                        </a>
+                      </Button>
+                    )}
+                  </div>
+                  {field.value && (
+                    <div className="w-32 h-32 rounded-lg border overflow-hidden bg-muted/20">
+                      <img src={field.value} className="w-full h-full object-cover" alt="Profile preview" />
+                    </div>
+                  )}
                 </div>
               </FormControl>
               <FormMessage />
@@ -450,7 +463,14 @@ function ProfileForm({ defaultValues, onSubmit, loading }: any) {
                     onChange={(e) => handleFileUpload(e, "resumeUrl")} 
                     disabled={uploadingResume} 
                   />
-                  {field.value && <span className="text-sm">Uploaded</span>}
+                  {field.value && (
+                    <Button variant="outline" size="sm" asChild className="shrink-0">
+                      <a href={field.value} target="_blank" rel="noopener noreferrer">
+                        <FileText className="mr-2 h-4 w-4" />
+                        View Resume
+                      </a>
+                    </Button>
+                  )}
                 </div>
               </FormControl>
               <FormMessage />
@@ -717,14 +737,27 @@ function ProjectForm({ defaultValues, onSubmit, loading }: any) {
             <FormItem>
               <FormLabel>Project Image</FormLabel>
               <FormControl>
-                <div className="flex gap-4 items-center">
-                  <Input 
-                    type="file" 
-                    accept="image/*"
-                    onChange={handleImageUpload} 
-                    disabled={uploadingImage} 
-                  />
-                  {field.value && <img src={field.value} className="w-12 h-12 rounded object-cover" />}
+                <div className="flex flex-col gap-4">
+                  <div className="flex gap-4 items-center">
+                    <Input 
+                      type="file" 
+                      accept="image/*"
+                      onChange={handleImageUpload} 
+                      disabled={uploadingImage} 
+                    />
+                    {field.value && (
+                      <Button variant="outline" size="icon" asChild>
+                        <a href={field.value} target="_blank" rel="noopener noreferrer">
+                          <Eye className="h-4 w-4" />
+                        </a>
+                      </Button>
+                    )}
+                  </div>
+                  {field.value && (
+                    <div className="w-full aspect-video rounded-lg border overflow-hidden bg-muted/20 max-w-sm">
+                      <img src={field.value} className="w-full h-full object-cover" alt="Project preview" />
+                    </div>
+                  )}
                 </div>
               </FormControl>
               <FormMessage />

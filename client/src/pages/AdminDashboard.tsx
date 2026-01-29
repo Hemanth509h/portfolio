@@ -499,6 +499,32 @@ function ProjectForm({ onSubmit, loading }: any) {
     },
   });
 
+  const [uploadingImage, setUploadingImage] = useState(false);
+
+  async function handleImageUpload(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setUploadingImage(true);
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+      if (res.ok) {
+        const data = await res.json();
+        form.setValue("imageUrl", data.url);
+      }
+    } catch (error) {
+      console.error("Upload failed", error);
+    } finally {
+      setUploadingImage(false);
+    }
+  }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -533,9 +559,17 @@ function ProjectForm({ onSubmit, loading }: any) {
           name="imageUrl"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Image URL</FormLabel>
+              <FormLabel>Project Image</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <div className="flex gap-4 items-center">
+                  <Input 
+                    type="file" 
+                    accept="image/*"
+                    onChange={handleImageUpload} 
+                    disabled={uploadingImage} 
+                  />
+                  {field.value && <img src={field.value} className="w-12 h-12 rounded object-cover" />}
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>

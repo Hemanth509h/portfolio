@@ -51,56 +51,68 @@ export default function Home() {
             <div className="inline-block px-4 py-2 rounded-full bg-primary/10 border border-primary/20 text-primary-foreground font-medium mb-6">
               Full Stack Developer
             </div>
-            <h1 className="text-5xl md:text-7xl font-bold font-display leading-tight mb-6">
-              Building <span className="text-gradient-primary">Digital</span> <br />
+            <h1 className="text-5xl md:text-7xl font-bold font-display leading-tight mb-4">
+              Building <span className="text-primary">Digital</span> <br />
               Experiences.
             </h1>
-            <h2 className="text-3xl font-bold mb-4">{profile?.name}</h2>
-            <p className="text-xl text-muted-foreground mb-8 max-w-lg leading-relaxed">
+            <h2 className="text-2xl font-bold mb-4">{profile?.name}</h2>
+            <p className="text-lg text-muted-foreground mb-10 max-w-lg leading-relaxed">
               {profile?.aboutMe}
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-white rounded-full px-8 h-14 text-base shadow-lg shadow-primary/25" asChild>
+            <div className="flex flex-col sm:flex-row gap-4 items-center">
+              <Button size="lg" className="bg-primary hover:bg-primary/90 text-white rounded-full px-10 h-14 text-base shadow-xl shadow-primary/20 transition-all hover:scale-105 active:scale-95" asChild>
                 <a href="#projects">
                   View My Work
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </a>
               </Button>
               {profile?.resumeUrl && profile.resumeUrl !== "#" && (
-                <Button size="lg" variant="outline" className="border-white/10 hover:bg-white/5 rounded-full px-8 h-14 text-base" asChild>
+                <Button size="lg" variant="outline" className="border-white/20 hover:bg-white/5 rounded-full px-8 h-14 text-base transition-all hover:border-white/40" asChild>
                   <a href={profile.resumeUrl} download target="_blank" rel="noopener noreferrer">
                     Download Resume
                   </a>
                 </Button>
               )}
-              <Button size="lg" variant="outline" className="border-white/10 hover:bg-white/5 rounded-full px-8 h-14 text-base" asChild>
+              <Button size="lg" variant="outline" className="border-white/20 hover:bg-white/5 rounded-full px-8 h-14 text-base transition-all hover:border-white/40" asChild>
                 <a href="#contact">Contact Me</a>
               </Button>
             </div>
             
-            <div className="flex gap-6 mt-12 text-muted-foreground">
-              {profile?.githubUrl && <a href={profile.githubUrl} className="hover:text-primary transition-colors"><Github size={24} /></a>}
-              {profile?.linkedinUrl && <a href={profile.linkedinUrl} className="hover:text-primary transition-colors"><Linkedin size={24} /></a>}
-              <a href={`mailto:${profile?.email}`} className="hover:text-primary transition-colors"><Mail size={24} /></a>
+            <div className="flex gap-8 mt-16 text-muted-foreground">
+              {profile?.githubUrl && (
+                <a href={profile.githubUrl} className="hover:text-primary transition-all hover:scale-110" title="GitHub">
+                  <Github size={22} />
+                </a>
+              )}
+              {profile?.linkedinUrl && (
+                <a href={profile.linkedinUrl} className="hover:text-primary transition-all hover:scale-110" title="LinkedIn">
+                  <Linkedin size={22} />
+                </a>
+              )}
+              <a href={`mailto:${profile?.email}`} className="hover:text-primary transition-all hover:scale-110" title="Email">
+                <Mail size={22} />
+              </a>
             </div>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.8 }}
+            initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
             className="hidden md:block relative"
           >
-            <div className="relative z-10 rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-card/50 backdrop-blur-sm p-4 aspect-square max-w-md mx-auto transform rotate-3 hover:rotate-0 transition-transform duration-500">
-               <div className="w-full h-full rounded-xl border border-white/5 overflow-hidden relative group">
+            <div className="relative z-10 rounded-3xl overflow-hidden border border-white/10 shadow-2xl bg-[#0a0a0a] p-3 aspect-square max-w-md mx-auto transform rotate-2 hover:rotate-0 transition-all duration-700 ease-out group">
+               <div className="w-full h-full rounded-2xl border border-white/5 overflow-hidden relative shadow-inner">
                  <img 
                    src={profile?.photoUrl || undefined} 
                    alt={profile?.name} 
-                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100"
+                   className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000 scale-105 group-hover:scale-100"
                  />
-                 <div className="absolute inset-0 bg-primary/10 mix-blend-overlay group-hover:bg-transparent transition-colors duration-700" />
+                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                </div>
             </div>
+            {/* Background Glow Effect */}
+            <div className="absolute -inset-4 bg-primary/20 blur-3xl rounded-full -z-10 group-hover:bg-primary/30 transition-colors duration-700" />
           </motion.div>
         </div>
 

@@ -273,10 +273,13 @@ function ProfileForm({ defaultValues, onSubmit, loading }: any) {
       const res = await fetch("/api/upload", {
         method: "POST",
         body: formData,
+        credentials: "include",
       });
       if (res.ok) {
         const data = await res.json();
         form.setValue(field, data.url);
+      } else {
+        console.error("Upload failed with status:", res.status);
       }
     } catch (error) {
       console.error("Upload failed", error);
@@ -536,10 +539,13 @@ function ProjectForm({ onSubmit, loading }: any) {
       const res = await fetch("/api/upload", {
         method: "POST",
         body: formData,
+        credentials: "include",
       });
       if (res.ok) {
         const data = await res.json();
         form.setValue("imageUrl", data.url);
+      } else {
+        console.error("Upload failed with status:", res.status);
       }
     } catch (error) {
       console.error("Upload failed", error);

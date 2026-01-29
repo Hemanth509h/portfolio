@@ -94,7 +94,7 @@ export default function Home() {
             <div className="relative z-10 rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-card/50 backdrop-blur-sm p-4 aspect-square max-w-md mx-auto transform rotate-3 hover:rotate-0 transition-transform duration-500">
                <div className="w-full h-full rounded-xl border border-white/5 overflow-hidden relative group">
                  <img 
-                   src={profile?.photoUrl} 
+                   src={profile?.photoUrl || undefined} 
                    alt={profile?.name} 
                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-110 group-hover:scale-100"
                  />
@@ -126,7 +126,7 @@ export default function Home() {
             >
               <div className="aspect-[4/5] rounded-3xl overflow-hidden border border-white/10 shadow-2xl relative">
                 <img 
-                  src={profile?.photoUrl} 
+                  src={profile?.photoUrl || undefined} 
                   alt="About Me" 
                   className="w-full h-full object-cover"
                 />

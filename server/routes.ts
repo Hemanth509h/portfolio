@@ -1,11 +1,29 @@
-import type { Express } from "express";
+import express, { type Express } from "express";
 import type { Server } from "http";
 import { storage } from "./storage";
 import { api } from "@shared/routes";
 import { z } from "zod";
 import { db } from "./db";
-import { skills, projects } from "@shared/schema";
+import { skills, projects, profile } from "@shared/schema";
 import { setupAuth } from "./auth";
+import multer from "multer";
+import path from "path";
+import fs from "fs";
+
+const storage_dir = "uploads";
+if (!fs.existsSync(storage_dir)) {
+  fs.mkdirSync(storage_dir);
+}
+
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: storage_dir,
+    filename: (_req, file, cb) => {
+      const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
+      cb(null, file.fieldname + "-" + uniqueSuffix + path.extname(file.originalname));
+    },
+  }),
+});
 
 async function seedDatabase() {
   const existingUsers = await storage.getUserByUsername("admin");
@@ -160,6 +178,15 @@ export async function registerRoutes(
     await storage.deleteProject(Number(req.params.id));
     res.sendStatus(204);
   });
+
+  // File Uploads
+  app.post("/api/upload", upload.single("file"), (req, res) => {
+    if (!req.isAuthenticated()) return res.sendStatus(401);
+    if (!req.file) return res.status(400).send("No file uploaded.");
+    res.json({ url: `/uploads/${req.file.filename}` });
+  });
+
+  app.use("/uploads", express.static(storage_dir));
 
   return httpServer;
 }

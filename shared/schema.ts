@@ -13,14 +13,14 @@ export const users = pgTable("users", {
 export const profile = pgTable("profile", {
   id: serial("id").primaryKey(),
   name: text("name").notNull(),
-  photoUrl: text("photo_url").notNull(),
+  photoUrl: text("photo_url"),
+  resumeUrl: text("resume_url"),
   aboutMe: text("about_me").notNull(),
   email: text("email").notNull(),
   phone: text("phone"),
   location: text("location"),
   githubUrl: text("github_url"),
   linkedinUrl: text("linkedin_url"),
-  resumeUrl: text("resume_url"),
 });
 
 export const skills = pgTable("skills", {

@@ -246,6 +246,36 @@ function ProfileForm({ defaultValues, onSubmit, loading }: any) {
     defaultValues,
   });
 
+  const [uploadingPhoto, setUploadingPhoto] = useState(false);
+  const [uploadingResume, setUploadingResume] = useState(false);
+
+  async function handleFileUpload(e: React.ChangeEvent<HTMLInputElement>, field: "photoUrl" | "resumeUrl") {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (field === "photoUrl") setUploadingPhoto(true);
+    else setUploadingResume(true);
+
+    const formData = new FormData();
+    formData.append("file", file);
+
+    try {
+      const res = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+      if (res.ok) {
+        const data = await res.json();
+        form.setValue(field, data.url);
+      }
+    } catch (error) {
+      console.error("Upload failed", error);
+    } finally {
+      if (field === "photoUrl") setUploadingPhoto(false);
+      else setUploadingResume(false);
+    }
+  }
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -267,9 +297,38 @@ function ProfileForm({ defaultValues, onSubmit, loading }: any) {
           name="photoUrl"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Photo URL</FormLabel>
+              <FormLabel>Photo</FormLabel>
               <FormControl>
-                <Input {...field} />
+                <div className="flex gap-4 items-center">
+                  <Input 
+                    type="file" 
+                    accept="image/*"
+                    onChange={(e) => handleFileUpload(e, "photoUrl")} 
+                    disabled={uploadingPhoto} 
+                  />
+                  {field.value && <img src={field.value} className="w-10 h-10 rounded object-cover" />}
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="resumeUrl"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Resume</FormLabel>
+              <FormControl>
+                <div className="flex gap-4 items-center">
+                  <Input 
+                    type="file" 
+                    accept=".pdf,.doc,.docx"
+                    onChange={(e) => handleFileUpload(e, "resumeUrl")} 
+                    disabled={uploadingResume} 
+                  />
+                  {field.value && <span className="text-sm">Uploaded</span>}
+                </div>
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -283,19 +342,6 @@ function ProfileForm({ defaultValues, onSubmit, loading }: any) {
               <FormLabel>About Me</FormLabel>
               <FormControl>
                 <Textarea {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        <FormField
-          control={form.control}
-          name="resumeUrl"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Resume URL</FormLabel>
-              <FormControl>
-                <Input {...field} placeholder="Link to your resume (e.g., Google Drive or PDF link)" />
               </FormControl>
               <FormMessage />
             </FormItem>

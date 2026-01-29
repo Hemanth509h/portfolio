@@ -5,26 +5,14 @@ import { api } from "@shared/routes";
 import { z } from "zod";
 import { setupAuth } from "./auth";
 import multer from "multer";
-import path from "path";
-import fs from "fs";
+import { uploadFileToGridFS, getFileFromGridFS } from "./gridfs";
 
 interface MulterRequest extends Request {
   file?: Express.Multer.File;
 }
 
-const storage_dir = "uploads";
-if (!fs.existsSync(storage_dir)) {
-  fs.mkdirSync(storage_dir);
-}
-
 const upload = multer({
-  storage: multer.diskStorage({
-    destination: storage_dir,
-    filename: (_req: any, file: any, cb: any) => {
-      const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-      cb(null, file.fieldname + "-" + uniqueSuffix + path.extname(file.originalname));
-    },
-  }),
+  storage: multer.memoryStorage(),
 });
 
 async function seedDatabase() {
@@ -121,13 +109,38 @@ export async function registerRoutes(
     res.sendStatus(204);
   });
 
-  app.post("/api/upload", upload.single("file"), (req: MulterRequest, res) => {
+  app.post("/api/upload", upload.single("file"), async (req: MulterRequest, res) => {
     if (!req.isAuthenticated()) return res.sendStatus(401);
     if (!req.file) return res.status(400).send("No file uploaded.");
-    res.json({ url: `/uploads/${req.file.filename}` });
+    
+    try {
+      const fileId = await uploadFileToGridFS(
+        req.file.buffer,
+        req.file.originalname,
+        req.file.mimetype
+      );
+      res.json({ url: `/uploads/${fileId}` });
+    } catch (error) {
+      console.error("Upload error:", error);
+      res.status(500).send("Failed to upload file");
+    }
   });
 
-  app.use("/uploads", express.static(storage_dir));
+  app.get("/uploads/:fileId", async (req, res) => {
+    try {
+      const result = await getFileFromGridFS(req.params.fileId);
+      if (!result) {
+        return res.status(404).send("File not found");
+      }
+      
+      res.set("Content-Type", result.contentType);
+      res.set("Content-Disposition", `inline; filename="${result.filename}"`);
+      result.stream.pipe(res);
+    } catch (error) {
+      console.error("File retrieval error:", error);
+      res.status(500).send("Failed to retrieve file");
+    }
+  });
 
   return httpServer;
 }

@@ -313,6 +313,7 @@ export default function Home() {
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300"
+                      data-testid="link-social-linkedin"
                     >
                       <Linkedin size={18} />
                     </a>
@@ -323,6 +324,7 @@ export default function Home() {
                       target="_blank" 
                       rel="noopener noreferrer"
                       className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300"
+                      data-testid="link-social-instagram"
                     >
                       <Instagram size={18} />
                     </a>
@@ -355,10 +357,10 @@ export default function Home() {
             © {new Date().getFullYear()} DevPortfolio. Built with React & Tailwind.
           </p>
           <div className="flex gap-6 text-muted-foreground">
-            {profile?.githubUrl && <a href={profile.githubUrl} className="hover:text-primary transition-colors">GitHub</a>}
-            {profile?.linkedinUrl && <a href={profile.linkedinUrl} className="hover:text-primary transition-colors">LinkedIn</a>}
-            {profile?.instagramUrl && <a href={profile.instagramUrl} className="hover:text-primary transition-colors">Instagram</a>}
-            <a href={`mailto:${profile?.email}`} className="hover:text-primary transition-colors">Email</a>
+            {profile?.githubUrl && <a href={profile.githubUrl} className="hover:text-primary transition-colors" data-testid="link-github">GitHub</a>}
+            {profile?.linkedinUrl && <a href={profile.linkedinUrl} className="hover:text-primary transition-colors" data-testid="link-linkedin">LinkedIn</a>}
+            {profile?.instagramUrl && <a href={profile.instagramUrl} className="hover:text-primary transition-colors" data-testid="link-instagram">Instagram</a>}
+            <a href={`mailto:${profile?.email}`} className="hover:text-primary transition-colors" data-testid="link-email">Email</a>
           </div>
         </div>
       </footer>

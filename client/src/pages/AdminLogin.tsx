@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useLocation } from "wouter";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { insertUserSchema } from "@shared/schema";
+import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -16,15 +16,18 @@ import { Input } from "@/components/ui/input";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useToast } from "@/hooks/use-toast";
 
+const loginSchema = z.object({
+  password: z.string().min(1, "Password is required"),
+});
+
 export default function AdminLogin() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
 
   const form = useForm({
-    resolver: zodResolver(insertUserSchema),
+    resolver: zodResolver(loginSchema),
     defaultValues: {
-      username: "",
       password: "",
     },
   });

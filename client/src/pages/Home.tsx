@@ -66,9 +66,9 @@ export default function Home() {
                   <ArrowRight className="ml-2 h-5 w-5" />
                 </a>
               </Button>
-              {profile?.resumeUrl && (
+              {profile?.resumeUrl && profile.resumeUrl !== "#" && (
                 <Button size="lg" variant="outline" className="border-white/10 hover:bg-white/5 rounded-full px-8 h-14 text-base" asChild>
-                  <a href={profile.resumeUrl} target="_blank" rel="noopener noreferrer">
+                  <a href={profile.resumeUrl} download target="_blank" rel="noopener noreferrer">
                     Download Resume
                   </a>
                 </Button>

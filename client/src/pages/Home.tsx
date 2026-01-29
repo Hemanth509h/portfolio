@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ArrowRight, ChevronDown, Github, Linkedin, Twitter, Mail } from "lucide-react";
+import { ArrowRight, ChevronDown, Github, Linkedin, Twitter, Mail, Phone, MapPin } from "lucide-react";
 import { useSkills, useProjects } from "@/hooks/use-portfolio";
 import { Navigation } from "@/components/Navigation";
 import { ProjectCard } from "@/components/ProjectCard";
@@ -234,8 +234,78 @@ export default function Home() {
               </p>
             </div>
 
-            <div className="bg-card/50 backdrop-blur-lg border border-white/5 rounded-3xl p-8 md:p-12 shadow-2xl">
-              <ContactForm />
+            <div className="bg-card/50 backdrop-blur-lg border border-white/5 rounded-3xl p-8 md:p-12 shadow-2xl grid md:grid-cols-5 gap-12">
+              <div className="md:col-span-2 space-y-8">
+                <div>
+                  <h3 className="text-2xl font-bold mb-6">Contact Information</h3>
+                  <p className="text-muted-foreground mb-8">
+                    Feel free to reach out through any of these channels. I'm always open to discussing new projects or opportunities.
+                  </p>
+                </div>
+                
+                <div className="space-y-6">
+                  <div className="flex items-center gap-4 group">
+                    <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                      <Mail size={20} />
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Email</p>
+                      <a href={`mailto:${profile?.email}`} className="font-medium hover:text-primary transition-colors">
+                        {profile?.email}
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-4 group">
+                    <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                      <Phone size={20} />
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Phone</p>
+                      <a href={`tel:${profile?.phone}`} className="font-medium hover:text-primary transition-colors">
+                        {profile?.phone}
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-4 group">
+                    <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                      <MapPin size={20} />
+                    </div>
+                    <div>
+                      <p className="text-sm text-muted-foreground">Location</p>
+                      <p className="font-medium">{profile?.location}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="pt-8 flex gap-4">
+                  {profile?.githubUrl && (
+                    <a 
+                      href={profile.githubUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300"
+                    >
+                      <Github size={18} />
+                    </a>
+                  )}
+                  {profile?.linkedinUrl && (
+                    <a 
+                      href={profile.linkedinUrl} 
+                      target="_blank" 
+                      rel="noopener noreferrer"
+                      className="w-10 h-10 rounded-full bg-white/5 flex items-center justify-center hover:bg-primary hover:text-white transition-all duration-300"
+                    >
+                      <Linkedin size={18} />
+                    </a>
+                  )}
+                </div>
+              </div>
+              
+              <div className="md:col-span-3">
+                <ContactForm />
+              </div>
             </div>
           </div>
         </div>

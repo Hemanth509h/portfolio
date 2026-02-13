@@ -1,14 +1,7 @@
-import * from "react";
-
+import React from "react";
 
 const TOAST_LIMIT = 1;
 const TOAST_REMOVE_DELAY = 1000000;
-
-  id;
-  title?.ReactNode;
-  description?.ReactNode;
-  action?;
-};
 
 const actionTypes = {
   ADD_TOAST: "ADD_TOAST",
@@ -24,28 +17,7 @@ function genId() {
   return count.toString();
 }
 
-
-  | {
-      type["ADD_TOAST"];
-      toast;
-    }
-  | {
-      type["UPDATE_TOAST"];
-      toast;
-    }
-  | {
-      type["DISMISS_TOAST"];
-      toastId?["id"];
-    }
-  | {
-      type["REMOVE_TOAST"];
-      toastId?["id"];
-    };
-
-  toasts[];
-}
-
-const toastTimeouts = new Map<string, ReturnType<typeof setTimeout>>();
+const toastTimeouts = new Map();
 
 const addToRemoveQueue = (toastId) => {
   if (toastTimeouts.has(toastId)) {
@@ -74,14 +46,14 @@ export const reducer = (state, action) => {
     case "UPDATE_TOAST":
       return {
         ...state,
-        toasts: state.toasts.map((t) => (t.id === action.toast.id ? { ...t, ...action.toast } : t)),
+        toasts: state.toasts.map((t) =>
+          t.id === action.toast.id ? { ...t, ...action.toast } : t
+        ),
       };
 
     case "DISMISS_TOAST": {
       const { toastId } = action;
 
-      // ! Side effects ! - This could be extracted into a dismissToast() action,
-      // but I'll keep it here for simplicity
       if (toastId) {
         addToRemoveQueue(toastId);
       } else {
@@ -98,7 +70,7 @@ export const reducer = (state, action) => {
                 ...t,
                 open: false,
               }
-            : t,
+            : t
         ),
       };
     }
@@ -116,7 +88,7 @@ export const reducer = (state, action) => {
   }
 };
 
-const listeners<(state) => void> = [];
+const listeners = [];
 
 let memoryState = { toasts: [] };
 
@@ -126,7 +98,6 @@ function dispatch(action) {
     listener(memoryState);
   });
 }
-
 
 function toast({ ...props }) {
   const id = genId();
@@ -173,7 +144,7 @@ function useToast() {
   return {
     ...state,
     toast,
-    dismiss: (toastId?) => dispatch({ type: "DISMISS_TOAST", toastId }),
+    dismiss: (toastId) => dispatch({ type: "DISMISS_TOAST", toastId }),
   };
 }
 

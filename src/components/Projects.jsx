@@ -52,7 +52,7 @@ const Projects = () => (
             <img src={p.image} alt={p.title} className="h-44 w-full object-cover" loading="lazy" />
             <CardHeader className="pb-2">
               <CardTitle className="text-lg">{p.title}</CardTitle>
-              {p.desc}</CardDescription>
+              <CardDescription>{p.desc}</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-wrap gap-1.5 pb-2">
               {p.tech.map((t) => (

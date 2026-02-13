@@ -16,7 +16,7 @@ const Hero = () => {
 
           <div className="space-y-4" style={{ animation: "fade-in-up 0.6s ease-out forwards" }}>
             <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
-              John Doe
+              Peddaboina Hemanth Kumar
             </h1>
             <p className="text-xl font-medium text-primary sm:text-2xl">
               Full Stack Developer

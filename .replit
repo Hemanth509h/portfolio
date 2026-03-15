@@ -30,13 +30,13 @@ args = "Start application"
 name = "Start application"
 author = "agent"
 
-[[workflows.workflow.tasks]]
-task = "shell.exec"
-args = "npm run dev:portfolio"
-waitForPort = 5173
-
 [workflows.workflow.metadata]
 outputType = "webview"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "PORT=5173 npm run dev:portfolio"
+waitForPort = 5173
 
 [agent]
 stack = "PNPM_WORKSPACE"

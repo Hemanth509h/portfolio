@@ -35,7 +35,7 @@ outputType = "webview"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "npm run dev:portfolio"
+args = "npm run dev"
 waitForPort = 5173
 
 [agent]

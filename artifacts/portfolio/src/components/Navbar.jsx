@@ -52,7 +52,7 @@ export function Navbar() {
               <Terminal className="w-6 h-6 text-primary" />
             </div>
             <span className="font-display font-bold text-xl tracking-tight">
-              Alex<span className="text-primary">.dev</span>
+              Hemanth<span className="text-primary">.dev</span>
             </span>
           </a>
           <nav className="hidden md:flex items-center gap-8">

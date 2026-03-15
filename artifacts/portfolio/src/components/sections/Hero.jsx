@@ -47,7 +47,7 @@ export function HeroSection() {
           }}
           className="text-5xl md:text-7xl lg:text-8xl font-bold font-display tracking-tighter mb-6"
         >
-          Hi, I'm <span className="text-foreground">Alex Johnson</span>
+          Hi, I'm <span className="text-foreground">P Hemanth Kumar</span>
           <br />
           <span className="bg-gradient-to-r from-primary via-cyan-300 to-accent bg-clip-text text-transparent">
             Full Stack & Data

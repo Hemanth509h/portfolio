@@ -7,14 +7,13 @@
     "artifacts/*"
   ],
   "scripts": {
-    "dev": "concurrently --names \"vite,express\" --prefix \"[{index}]\" --prefix-colors \"cyan,yellow\" \"npm run dev:portfolio\" \"npm run dev:api\"",
+    "dev": "npm run dev -w @workspace/portfolio",
     "dev:portfolio": "npm run dev -w @workspace/portfolio",
     "dev:api": "npm run dev -w @workspace/api-server",
     "build": "npm run build -w @workspace/portfolio"
   },
   "devDependencies": {
-    "concurrently": "^9.2.1",
-    "prettier": "^3.8.1",
-    "typescript": "~5.9.2"
+    "typescript": "~5.9.2",
+    "prettier": "^3.8.1"
   }
 }

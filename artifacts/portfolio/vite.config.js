@@ -3,7 +3,7 @@ import react from "@vitejs/plugin-react";
 import tailwindcss from "@tailwindcss/vite";
 import path from "path";
 
-const port = Number(process.env.PORT) || 5000;
+const port = Number(process.env.PORT) || 5173;
 const basePath = process.env.BASE_PATH || "/";
 
 export default defineConfig({
@@ -22,15 +22,8 @@ export default defineConfig({
   },
   server: {
     port,
-    strictPort: true,
-    host: "0.0.0.0",
+    host: true,
     allowedHosts: true,
-    proxy: {
-      "/api": {
-        target: "http://localhost:3000",
-        changeOrigin: true,
-      },
-    },
   },
   preview: {
     port,

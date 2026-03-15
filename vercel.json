@@ -1,0 +1,9 @@
+{
+  "buildCommand": "npm run build -w @workspace/portfolio",
+  "outputDirectory": "artifacts/portfolio/dist",
+  "installCommand": "npm install",
+  "framework": null,
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}

@@ -3,14 +3,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "private": true,
-  "workspaces": [
-    "artifacts/*"
-  ],
   "scripts": {
-    "dev": "npm run dev -w @workspace/portfolio",
-    "dev:portfolio": "npm run dev -w @workspace/portfolio",
-    "dev:api": "npm run dev -w @workspace/api-server",
-    "build": "npm run build -w @workspace/portfolio"
+    "dev": "npm run dev --prefix artifacts/portfolio",
+    "dev:portfolio": "npm run dev --prefix artifacts/portfolio",
+    "build": "npm run build --prefix artifacts/portfolio"
   },
   "devDependencies": {
     "typescript": "~5.9.2",

@@ -25,7 +25,7 @@ const Button = React.forwardRef(({
     lg: "h-14 rounded-xl px-8 text-lg",
     icon: "h-11 w-11"
   };
-  return <Comp ref={ref} disabled={!asChild && (isLoading || disabled)} className={cn("inline-flex items-center justify-center whitespace-nowrap rounded-lg font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-95", variants[variant], sizes[size], className)} {...props}>{asChild ? children : <_Fragment>{isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}{children}</_Fragment>}</Comp>;
+  return <Comp ref={ref} disabled={!asChild && (isLoading || disabled)} className={cn("inline-flex items-center justify-center whitespace-nowrap rounded-lg font-medium ring-offset-background transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-95", variants[variant], sizes[size], className)} {...props}>{asChild ? children : <>{isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}{children}</>}</Comp>;
 });
 Button.displayName = "Button";
 export { Button };

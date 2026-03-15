@@ -18,8 +18,7 @@ npm workspace monorepo. Contains the Developer Portfolio web app and its backend
 artifacts-monorepo/
 ├── artifacts/              # Deployable applications
 │   ├── portfolio/          # React portfolio site (JSX)
-│   ├── api-server/         # Express API server (TypeScript)
-│   └── mockup-sandbox/     # Component preview server
+│   └── api-server/         # Express API server (TypeScript)
 ├── pnpm-workspace.yaml     # pnpm workspace config (retained for workflow runner)
 ├── package.json            # Root package (npm workspaces)
 ├── package-lock.json       # npm lockfile

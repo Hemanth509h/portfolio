@@ -1,19 +1,7 @@
 import app from "./app";
 
-const rawPort = process.env["PORT"];
+const port = Number(process.env["PORT"]) || 3000;
 
-if (!rawPort) {
-  throw new Error(
-    "PORT environment variable is required but was not provided.",
-  );
-}
-
-const port = Number(rawPort);
-
-if (Number.isNaN(port) || port <= 0) {
-  throw new Error(`Invalid PORT value: "${rawPort}"`);
-}
-
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+app.listen(port, "0.0.0.0", () => {
+  console.log(`[express] API server listening on http://0.0.0.0:${port}`);
 });

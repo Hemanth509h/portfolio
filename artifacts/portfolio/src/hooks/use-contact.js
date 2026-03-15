@@ -5,10 +5,8 @@ import { useToast } from "@/hooks/use-toast";
 export const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
-  message: z.string().min(10, "Message must be at least 10 characters")
+  message: z.string().min(10, "Message must be at least 10 characters"),
 });
-
-
 
 export function useSubmitContact() {
   const { toast } = useToast();
@@ -22,15 +20,15 @@ export function useSubmitContact() {
     onSuccess: () => {
       toast({
         title: "Message Sent!",
-        description: "Thank you for reaching out. I'll get back to you soon."
+        description: "Thank you for reaching out. I'll get back to you soon.",
       });
     },
     onError: () => {
       toast({
         title: "Error",
         description: "Something went wrong. Please try again later.",
-        variant: "destructive"
+        variant: "destructive",
       });
-    }
+    },
   });
 }

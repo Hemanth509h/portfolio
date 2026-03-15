@@ -8,5 +8,19 @@ import { ExperienceSection } from "@/components/sections/Experience";
 import { ContactSection } from "@/components/sections/Contact";
 import { Footer } from "@/components/Footer";
 export default function Home() {
-  return <div className="min-h-screen bg-background text-foreground flex flex-col"><Navbar /><main className="flex-grow"><HeroSection /><AboutSection /><SkillsSection /><ProjectsSection /><GitHubProjectsSection /><ExperienceSection /><ContactSection /></main><Footer /></div>;
+  return (
+    <div className="min-h-screen bg-background text-foreground flex flex-col">
+      <Navbar />
+      <main className="flex-grow">
+        <HeroSection />
+        <AboutSection />
+        <SkillsSection />
+        <ProjectsSection />
+        <GitHubProjectsSection />
+        <ExperienceSection />
+        <ContactSection />
+      </main>
+      <Footer />
+    </div>
+  );
 }

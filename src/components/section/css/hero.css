@@ -72,20 +72,35 @@
 .hero-heading {
   font-size: 72px;
   font-weight: 700;
-  line-height: 1.1;
+  line-height: 1.15;
   color: #e5e7eb;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   width: 100%;
 }
 
-/* gradient title */
-.hero-gradient {
-  font-size: 72px;
-  font-weight: 700;
-  background: linear-gradient(90deg, #06b6d4, #38bdf8, #60a5fa);
+.name-highlight {
+  color: #ffffff;
+}
+
+.role-slider-container {
+  height: 90px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 5px;
+}
+
+.role-text {
+  position: absolute;
+  background: linear-gradient(90deg, #10a4e8, #50e6fc, #10a4e8);
   background-clip: text;
+  -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  margin-bottom: 20px;
+  font-weight: 800;
+  font-size: 72px;
+  white-space: nowrap;
 }
 
 /* description */
@@ -96,7 +111,8 @@
   max-width: 700px;
   margin: auto;
   margin-bottom: 40px;
-  
+  position: relative;
+  z-index: 2;
 }
 
 /* buttons */
@@ -220,6 +236,14 @@
 
 @media screen and (max-width: 768px) {
   .hero-heading {
+    font-size: 48px;
+  }
+
+  .role-slider-container {
+    height: 60px;
+  }
+
+  .role-text {
     font-size: 48px;
   }
 

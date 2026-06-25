@@ -12,27 +12,59 @@ const SKILL_CATEGORIES = [
   },
 ];
 
+const cardVariants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      ease: [0.16, 1, 0.3, 1],
+      staggerChildren: 0.05,
+      delayChildren: 0.1,
+    },
+  },
+};
+
+const chipVariants = {
+  hidden: { opacity: 0, scale: 0.9, y: 10 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: {
+      type: "spring",
+      stiffness: 260,
+      damping: 22,
+    },
+  },
+};
+
 export function Skills() {
+  const easeCurve = [0.16, 1, 0.3, 1];
+
   return (
     <section className="skillssection" id="skills">
       <Motion.h1
-        initial={{ opacity: 0, y: 50 }}
+        initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
+        transition={{ duration: 0.8, ease: easeCurve }}
         className="Technical-Arsenal"
         viewport={{
           once: true,
+          amount: 0.2
         }}
       >
         Technical Arsenal
       </Motion.h1>
       <Motion.p
-        initial={{ opacity: 0, y: 50 }}
+        initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.2 }}
-         viewport={{
-                    once: true,
-                  }}
+        transition={{ duration: 0.8, delay: 0.1, ease: easeCurve }}
+        viewport={{
+          once: true,
+          amount: 0.2
+        }}
         className="skills-description"
       >
         The tools and technologies I use to bring ideas to life.
@@ -41,20 +73,13 @@ export function Skills() {
       <div className="skills-grid">
         {SKILL_CATEGORIES.map((category, idx) => (
           <Motion.div
-            initial={{
-              opacity: 0,
-              y: 20,
-            }}
-            whileInView={{
-              opacity: 1,
-              y: 0,
-            }}
+            key={idx}
+            variants={cardVariants}
+            initial="hidden"
+            whileInView="visible"
             viewport={{
               once: true,
-            }}
-            transition={{
-              duration: 0.5,
-              delay: idx * 0.2,
+              amount: 0.2
             }}
             className="skillscard"
           >
@@ -66,24 +91,13 @@ export function Skills() {
             <div className="skillslist">
               {category.skills.map((skill, sIdx) => (
                 <Motion.div
-                  initial={{
-                    opacity: 0,
-                    scale: 0.8,
-                  }}
-                  whileInView={{
-                    opacity: 1,
-                    scale: 1,
-                  }}
-                  viewport={{
-                    once: true,
-                  }}
-                  transition={{
-                    duration: 0.3,
-                    delay: idx * 0.2 + sIdx * 0.05,
-                  }}
+                  key={sIdx}
+                  variants={chipVariants}
                   whileHover={{
-                    y: -3,
-                    scale: 1.05,
+                    y: -4,
+                    scale: 1.04,
+                    boxShadow: "0 5px 15px rgba(13, 162, 231, 0.25)",
+                    borderColor: "rgba(13, 162, 231, 0.4)",
                   }}
                   className="skillitem"
                 >

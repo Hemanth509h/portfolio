@@ -84,30 +84,30 @@
 .nav-link {
   font-size: 14px;
   font-weight: 500;
-  color: #6b7280;
+  color: #94a3b8;
   text-decoration: none;
-  transition: all 0.3s ease;
+  transition: color 0.3s ease, transform 0.3s ease;
   position: relative;
+  padding: 4px 0;
 }
 
 .nav-link:hover {
-  color: #6366f1;
-  transform: translateY(-2px);
+  color: #38bdf8;
+  transform: translateY(-1px);
 }
 
-.nav-link::after {
-  content: "";
+.nav-link.active-tab {
+  color: #38bdf8;
+}
+
+.active-underline {
   position: absolute;
   left: 0;
+  right: 0;
   bottom: -4px;
-  width: 0%;
   height: 2px;
-  background: #6366f1;
-  transition: width 0.3s ease;
-}
-
-.nav-link:hover::after {
-  width: 100%;
+  background: linear-gradient(90deg, #10a4e8, #50e6fc);
+  border-radius: 2px;
 }
 
 .hire-btn {
@@ -180,18 +180,24 @@ html {
   color: #9ca3af;
   text-decoration: none;
   font-size: 16px;
-  transition: 0.3s;
+  transition: all 0.3s ease;
+  width: 100%;
+  text-align: center;
+  padding: 8px 0;
 }
 
-.mobile-nav-link:hover {
-  color: #6366f1;
+.mobile-nav-link:hover,
+.mobile-nav-link.mobile-active {
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.05);
 }
 
 .mobile-hire-btn {
-  padding: 8px 16px;
+  padding: 8px 24px;
   border-radius: 9999px;
-  background: #6366f1;
-  color: white;
+  background: linear-gradient(90deg, #10a4e8, #50e6fc);
+  color: #020617;
+  font-weight: 600;
   text-decoration: none;
 }
 

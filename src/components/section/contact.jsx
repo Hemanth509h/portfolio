@@ -1,7 +1,7 @@
 import "./css/contact.css";
 import { useForm } from "react-hook-form";
 import { Mail, MapPin, Github, Linkedin, Instagram, Send } from "lucide-react";
-import { motion as Motion } from "framer-motion";
+import { motion as Motion, AnimatePresence } from "framer-motion";
 import emailjs from "@emailjs/browser";
 import { useState } from "react";
 
@@ -140,9 +140,19 @@ export function ContactSection() {
                     })}
                     placeholder="John Doe"
                   />
-                  <p className="error">
-                    {form.formState.errors.name?.message}
-                  </p>
+                  <AnimatePresence>
+                    {form.formState.errors.name && (
+                      <Motion.p
+                        className="error"
+                        initial={{ opacity: 0, height: 0, y: -5 }}
+                        animate={{ opacity: 1, height: "auto", y: 0 }}
+                        exit={{ opacity: 0, height: 0, y: -5 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        {form.formState.errors.name.message}
+                      </Motion.p>
+                    )}
+                  </AnimatePresence>
                 </Motion.div>
 
                 {/* EMAIL */}
@@ -159,9 +169,19 @@ export function ContactSection() {
                     })}
                     placeholder="john@example.com"
                   />
-                  <p className="error">
-                    {form.formState.errors.email?.message}
-                  </p>
+                  <AnimatePresence>
+                    {form.formState.errors.email && (
+                      <Motion.p
+                        className="error"
+                        initial={{ opacity: 0, height: 0, y: -5 }}
+                        animate={{ opacity: 1, height: "auto", y: 0 }}
+                        exit={{ opacity: 0, height: 0, y: -5 }}
+                        transition={{ duration: 0.2 }}
+                      >
+                        {form.formState.errors.email.message}
+                      </Motion.p>
+                    )}
+                  </AnimatePresence>
                 </Motion.div>
 
               </div>
@@ -175,9 +195,19 @@ export function ContactSection() {
                   })}
                   placeholder="How can I help you?"
                 />
-                <p className="error">
-                  {form.formState.errors.message?.message}
-                </p>
+                <AnimatePresence>
+                  {form.formState.errors.message && (
+                    <Motion.p
+                      className="error"
+                      initial={{ opacity: 0, height: 0, y: -5 }}
+                      animate={{ opacity: 1, height: "auto", y: 0 }}
+                      exit={{ opacity: 0, height: 0, y: -5 }}
+                      transition={{ duration: 0.2 }}
+                    >
+                      {form.formState.errors.message.message}
+                    </Motion.p>
+                  )}
+                </AnimatePresence>
               </Motion.div>
 
               {/* BUTTON */}
@@ -186,9 +216,47 @@ export function ContactSection() {
                 disabled={loading}
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
+                layout
+                style={{ position: "relative", overflow: "hidden", display: "flex", justifyContent: "center", alignItems: "center" }}
               >
-                <Send size={16} />
-                {loading ? "Sending..." : "Send Message"}
+                <AnimatePresence mode="wait">
+                  {loading ? (
+                    <Motion.span
+                      key="loading"
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -15 }}
+                      transition={{ duration: 0.2 }}
+                      style={{ display: "flex", alignItems: "center", gap: "8px" }}
+                    >
+                      <Motion.span
+                        animate={{ rotate: 360 }}
+                        transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+                        style={{
+                          width: "14px",
+                          height: "14px",
+                          border: "2px solid #020617",
+                          borderTopColor: "transparent",
+                          borderRadius: "50%",
+                          display: "inline-block"
+                        }}
+                      />
+                      Sending...
+                    </Motion.span>
+                  ) : (
+                    <Motion.span
+                      key="send"
+                      initial={{ opacity: 0, y: 15 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -15 }}
+                      transition={{ duration: 0.2 }}
+                      style={{ display: "flex", alignItems: "center", gap: "8px" }}
+                    >
+                      <Send size={16} />
+                      Send Message
+                    </Motion.span>
+                  )}
+                </AnimatePresence>
               </Motion.button>
 
             </form>

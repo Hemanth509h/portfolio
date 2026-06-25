@@ -1,6 +1,6 @@
 import "./css/projects.css";
 import { useState } from "react";
-import { motion as Motion } from "framer-motion";
+import { motion as Motion, AnimatePresence } from "framer-motion";
 import { Github, ExternalLink, Activity, Code, ChevronLeft, ChevronRight } from "lucide-react";
 
 import netflix1 from "../../assets/netflix/netflix_page-0001.jpg";
@@ -122,27 +122,61 @@ Object.keys(groupedProjects).forEach((key) => {
 
 /* ================= IMAGE SLIDER ================= */
 function ImageSlider({ images, title }) {
-  const [current, setCurrent] = useState(0);
+  const [[page, direction], setPage] = useState([0, 0]);
 
-  const prev = (e) => {
+  const paginate = (newDirection, e) => {
     e.stopPropagation();
-    setCurrent((c) => (c - 1 + images.length) % images.length);
+    let nextPage = page + newDirection;
+    if (nextPage < 0) nextPage = images.length - 1;
+    if (nextPage >= images.length) nextPage = 0;
+    setPage([nextPage, newDirection]);
   };
 
-  const next = (e) => {
-    e.stopPropagation();
-    setCurrent((c) => (c + 1) % images.length);
+  const current = page;
+
+  const slideVariants = {
+    enter: (dir) => ({
+      x: dir > 0 ? 300 : -300,
+      opacity: 0
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1
+    },
+    exit: (dir) => ({
+      zIndex: 0,
+      x: dir < 0 ? 300 : -300,
+      opacity: 0
+    })
   };
 
   return (
-    <div className="slider">
-      <img src={images[current]} alt={title} className="slider-img" />
+    <div className="slider" style={{ position: "relative", overflow: "hidden" }}>
+      <AnimatePresence initial={false} custom={direction} mode="popLayout">
+        <Motion.img
+          key={page}
+          src={images[current]}
+          alt={title}
+          custom={direction}
+          variants={slideVariants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={{
+            x: { type: "spring", stiffness: 300, damping: 30 },
+            opacity: { duration: 0.2 }
+          }}
+          className="slider-img"
+          style={{ width: "100%", height: "100%", objectFit: "cover" }}
+        />
+      </AnimatePresence>
 
-      <button className="slider-btn slider-btn-left" onClick={prev}>
+      <button className="slider-btn slider-btn-left" onClick={(e) => paginate(-1, e)}>
         <ChevronLeft size={18} />
       </button>
 
-      <button className="slider-btn slider-btn-right" onClick={next}>
+      <button className="slider-btn slider-btn-right" onClick={(e) => paginate(1, e)}>
         <ChevronRight size={18} />
       </button>
 
@@ -153,7 +187,8 @@ function ImageSlider({ images, title }) {
             className={`slider-dot ${i === current ? "active" : ""}`}
             onClick={(e) => {
               e.stopPropagation();
-              setCurrent(i);
+              const dir = i > current ? 1 : -1;
+              setPage([i, dir]);
             }}
           />
         ))}
@@ -171,7 +206,7 @@ const containerVariants = {
   hidden: {},
   visible: {
     transition: {
-      staggerChildren: 0.15,
+      staggerChildren: 0.1,
     },
   },
 };
@@ -179,44 +214,42 @@ const containerVariants = {
 const cardVariants = {
   hidden: {
     opacity: 0,
-    y: 50,
+    y: 40,
   },
   visible: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.5,
+      duration: 0.6,
+      ease: [0.16, 1, 0.3, 1],
     },
   },
 };
 
 /* ================= COMPONENT ================= */
 export function Projects() {
+  const easeCurve = [0.16, 1, 0.3, 1];
+
   return (
-    <Motion.section
-      className="projectssection"
-      id="projects"
-      variants={containerVariants}
-      initial="hidden"
-      whileInView="visible"
-      viewport={{ once: true }}
-    >
+    <section className="projectssection" id="projects">
       {/* HEADER */}
       <div className="projects-description">
         <Motion.h1
           className="projects-title"
-          initial={{ opacity: 0, y: -40 }}
+          initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, ease: easeCurve }}
         >
           Featured Work
         </Motion.h1>
 
         <Motion.p
           className="projects-description2"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.1, ease: easeCurve }}
         >
           My full stack & data analysis projects
         </Motion.p>
@@ -229,21 +262,33 @@ export function Projects() {
           {/* CATEGORY TITLE */}
           <Motion.h2
             className="category-title"
-            initial={{ opacity: 0, x: -50 }}
+            initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: easeCurve }}
           >
             {category}
           </Motion.h2>
 
           {/* PROJECT CARDS */}
-          <div className="projects-container">
+          <Motion.div
+            className="projects-container"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.1 }}
+          >
             {projects.map((project, index) => (
               <Motion.div
                 key={index}
                 className="project-card"
                 variants={cardVariants}
-                whileHover={{ scale: 1.05 }}
+                whileHover={{
+                  y: -6,
+                  boxShadow: "0 15px 30px rgba(56, 189, 248, 0.18)",
+                  borderColor: "rgba(56, 189, 248, 0.4)",
+                }}
+                style={{ transition: "box-shadow 0.3s ease, border-color 0.3s ease" }}
               >
                 {/* IMAGE SLIDER */}
                 {project.images && (
@@ -306,9 +351,9 @@ export function Projects() {
                 </div>
               </Motion.div>
             ))}
-          </div>
+          </Motion.div>
         </div>
       ))}
-    </Motion.section>
+    </section>
   );
 }

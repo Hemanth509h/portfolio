@@ -81,7 +81,7 @@
   padding: 5px 12px;
   border-radius: 999px;
   background: rgba(148, 163, 184, 0.15);
-  color: #cbd5f5;
+  color: var(--text);
 }
 
 /* ================= CONTENT ================= */
@@ -107,7 +107,7 @@
 
 .project-highlights li {
   font-size: 0.85rem;
-  color: #e2e8f0; /* FIXED: brighter text */
+  color: var(--muted);
   margin-bottom: 5px;
   line-height: 1.4;
 }
@@ -125,7 +125,7 @@
   padding: 6px 12px;
   border-radius: 999px;
   background: rgba(148, 163, 184, 0.1);
-  color: #cbd5f5;
+  color: var(--text);
   transition: 0.3s;
 }
 
@@ -193,7 +193,8 @@ hr {
   border-radius: 12px;
   overflow: hidden;
   margin-bottom: 15px;
-  background: #0f172a;
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
 }
 
 .slider-img {
@@ -209,9 +210,9 @@ hr {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background: rgba(2, 6, 23, 0.7);
-  border: 1px solid rgba(56, 189, 248, 0.3);
-  color: #38bdf8;
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
+  color: var(--text);
   border-radius: 50%;
   width: 30px;
   height: 30px;
@@ -237,7 +238,7 @@ hr {
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.35);
+  background: var(--border);
 }
 
 .slider-dot.active {
@@ -250,8 +251,9 @@ hr {
   top: 8px;
   right: 10px;
   font-size: 0.7rem;
-  color: #cbd5e1;
-  background: rgba(2, 6, 23, 0.6);
+  color: var(--text);
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
   padding: 2px 7px;
   border-radius: 999px;
 }

@@ -49,7 +49,7 @@
 .badge-dot {
   width: 8px;
   height: 8px;
-  background: #38bdf8;
+  background: var(--primary);
   border-radius: 50%;
   animation: pulse 2s infinite;
 }
@@ -151,8 +151,8 @@
 }
 
 .btn-outline:hover {
-  border-color: #38bdf8;
-  color: #38bdf8;
+  border-color: var(--primary);
+  color: var(--primary);
 }
 
 /* scroll icon */

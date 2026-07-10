@@ -235,7 +235,7 @@ export function ContactSection() {
                         style={{
                           width: "14px",
                           height: "14px",
-                          border: "2px solid #020617",
+                          border: "2px solid var(--border)",
                           borderTopColor: "transparent",
                           borderRadius: "50%",
                           display: "inline-block"

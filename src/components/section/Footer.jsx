@@ -41,9 +41,9 @@ export function Footer() {
       <style>{`
         .footer {
           padding: 40px 20px;
-          border-top: 1px solid rgba(255, 255, 255, 0.08);
-          background: #020617;
-          color: white;
+          border-top: 1px solid var(--border);
+          background: var(--surface);
+          color: var(--text);
         }
 
         .footer-container {
@@ -73,15 +73,16 @@ export function Footer() {
           font-size: 18px;
           font-weight: 700;
           letter-spacing: 0.5px;
+          color: var(--text);
         }
 
         .highlight {
-          color: #38bdf8;
+          color: var(--primary);
         }
 
         .footer-text {
           font-size: 14px;
-          color: #94a3b8;
+          color: var(--muted);
           text-align: center;
         }
 

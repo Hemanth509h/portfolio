@@ -51,11 +51,11 @@
 }
 
 .logo-link:hover .logo-text {
-  color: #ffffff;
+  color: var(--text);
 }
 
 .logo-link:hover .logo-accent {
-  color: #6366f1;
+  color: var(--primary);
 }
 
 .logo-link:hover .logo-icon {
@@ -117,7 +117,7 @@
   font-weight: 500;
   border-radius: 9999px;
   background: rgba(99, 102, 241, 0.1);
-  color: #6366f1;
+  color: var(--primary);
   border: 1px solid rgba(99, 102, 241, 0.2);
   text-decoration: none;
   transition: all 0.3s ease;
@@ -125,8 +125,8 @@
 }
 
 .hire-btn:hover {
-  background: #6366f1;
-  color: #ffffff;
+  background: var(--primary);
+  color: var(--bg);
   box-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
 }
 
@@ -138,16 +138,16 @@
   width: 42px;
   height: 42px;
   border-radius: 9999px;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.08);
-  color: #ffffff;
+  border: 1px solid var(--border);
+  background: var(--surface-strong);
+  color: var(--text);
   cursor: pointer;
   transition: all 0.3s ease;
 }
 
 .theme-toggle-btn:hover,
 .mobile-theme-toggle-btn:hover {
-  background: rgba(255, 255, 255, 0.16);
+  background: var(--surface);
 }
 
 .theme-icon {
@@ -160,7 +160,7 @@
   background: none;
   border: none;
   cursor: pointer;
-  color: #6b7280;
+  color: var(--muted);
 }
 
 html {
@@ -171,7 +171,7 @@ html {
 .menu-icon {
   width: 24px;
   height: 24px;
-  color: #6b7280;
+  color: var(--muted);
   transition: all 0.3s ease;
 }
 .mobile-menu{
@@ -191,7 +191,8 @@ html {
   left: 50%;
   transform: translateX(-50%);
   width: 80%;
-  background: rgba(2, 6, 23, 0.95);
+  background: var(--surface);
+  border: 1px solid var(--border);
   backdrop-filter: blur(10px);
   display: flex;
   flex-direction: column;
@@ -214,15 +215,15 @@ html {
 
 .mobile-nav-link:hover,
 .mobile-nav-link.mobile-active {
-  color: #38bdf8;
-  background: rgba(56, 189, 248, 0.05);
+  color: var(--primary);
+  background: rgba(56, 189, 248, 0.08);
 }
 
 .mobile-hire-btn {
   padding: 8px 24px;
   border-radius: 9999px;
   background: linear-gradient(90deg, #10a4e8, #50e6fc);
-  color: #020617;
+  color: var(--bg);
   font-weight: 600;
   text-decoration: none;
 }

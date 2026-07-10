@@ -52,8 +52,8 @@ function NotFound() {
           align-items: center;
           justify-content: center;
           min-height: 100vh;
-          background-color: #020617;
-          color: white;
+          background-color: var(--bg);
+          color: var(--text);
           padding: 20px;
           text-align: center;
         }
@@ -61,11 +61,11 @@ function NotFound() {
         .not-found-card {
           max-width: 500px;
           padding: 40px;
-          background: rgba(255, 255, 255, 0.02);
-          border: 1px solid rgba(255, 255, 255, 0.05);
+          background: var(--surface-strong);
+          border: 1px solid var(--border);
           backdrop-filter: blur(12px);
           border-radius: 20px;
-          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+          box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
         }
 
         .not-found-card h1 {
@@ -79,7 +79,7 @@ function NotFound() {
         }
 
         .not-found-card p {
-          color: #94a3b8;
+          color: var(--muted);
           font-size: 18px;
           line-height: 1.6;
           margin-bottom: 30px;
@@ -90,7 +90,7 @@ function NotFound() {
           align-items: center;
           padding: 12px 24px;
           background: linear-gradient(90deg, #10a4e8, #50e6fc);
-          color: #020617;
+          color: var(--bg);
           font-weight: 600;
           font-size: 15px;
           border-radius: 12px;

@@ -39,7 +39,7 @@
   align-items: start;
   justify-content: center;
   gap: 15px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
   max-width: 500px;
 }
 .skillscard > h3 {
@@ -75,12 +75,12 @@
   color: var(--text);
   font-size: 14px;
   font-weight: 500;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
   transition: all 0.3s ease;
 }
 .skillitem:hover {
-  border-color: #0da2e7;
-  background-color: #0da2e710;
+  border-color: var(--primary);
+  background-color: rgba(14, 165, 233, 0.12);
   transform: translateY(-3px) scale(1.05);
 }
 

@@ -4,7 +4,11 @@ import { motion as Motion } from "framer-motion";
 const SKILL_CATEGORIES = [
   {
     title: "Full Stack Development",
-    skills: ["HTML", "CSS", "JavaScript", "React", "Node.js", "Next.js", "MongoDB", "Supabase","Python"],
+    skills: ["HTML", "CSS", "JavaScript", "React", "Node.js", "Next.js", "MongoDB", "Supabase", "Python"],
+  },
+  {
+    title: "DevOps & Cloud",
+    skills: ["Docker", "Kubernetes", "AWS", "GitHub Actions", "Terraform", "CI/CD"],
   },
   {
     title: "Data Analysis & ML",

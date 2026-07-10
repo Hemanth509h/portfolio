@@ -9,9 +9,7 @@
   justify-content: center;
   text-align: center;
   overflow: hidden;
-  background: #020617;
-  overflow: hidden;
-
+  background: var(--surface);
 }
 
 /* background image */
@@ -39,9 +37,9 @@
   gap: 8px;
   padding: 6px 14px;
   border-radius: 9999px;
-  border: 1px solid #1da1f2;
-  background: rgba(29, 161, 242, 0.1);
-  color: #38bdf8;
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  background: rgba(56, 189, 248, 0.12);
+  color: var(--primary);
   font-size: 14px;
   margin-bottom: 30px;
   backdrop-filter: blur(10px);
@@ -73,13 +71,13 @@
   font-size: 72px;
   font-weight: 700;
   line-height: 1.15;
-  color: #e5e7eb;
+  color: var(--text);
   margin-bottom: 20px;
   width: 100%;
 }
 
 .name-highlight {
-  color: #ffffff;
+  color: var(--text);
 }
 
 .role-slider-container {
@@ -105,7 +103,7 @@
 
 /* description */
 .hero-description {
-  color: #94a3b8;
+  color: var(--muted);
   font-size: 20px;
   line-height: 1.7;
   max-width: 700px;
@@ -144,9 +142,9 @@
 .btn-outline {
   padding: 14px 28px;
   border-radius: 30px;
-  border: 1px solid #334155;
+  border: 1px solid rgba(148, 163, 184, 0.3);
   background: transparent;
-  color: #e5e7eb;
+  color: var(--text);
   font-size: 16px;
   cursor: pointer;
   transition: 0.3s;

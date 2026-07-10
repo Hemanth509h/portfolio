@@ -1,6 +1,58 @@
+:root {
+  --bg: #020617;
+  --surface: rgba(2, 6, 23, 0.92);
+  --surface-strong: #10141d;
+  --card: rgba(255, 255, 255, 0.05);
+  --text: #e5e7eb;
+  --muted: #94a3b8;
+  --primary: #38bdf8;
+  --accent: #10a4e8;
+  --border: rgba(255, 255, 255, 0.08);
+  --shadow: 0 10px 25px rgba(14, 162, 231, 0.18);
+  --gradient: linear-gradient(90deg, #10a4e8, #50e6fc);
+  color-scheme: dark;
+}
+
+[data-theme="light"] {
+  --bg: #f8fafc;
+  --surface: rgba(255, 255, 255, 0.92);
+  --surface-strong: #ffffff;
+  --card: rgba(15, 23, 42, 0.06);
+  --text: #0f172a;
+  --muted: #64748b;
+  --primary: #0ea5e9;
+  --accent: #0369a1;
+  --border: rgba(15, 23, 42, 0.12);
+  --shadow: 0 10px 25px rgba(14, 165, 233, 0.12);
+  --gradient: linear-gradient(90deg, #0ea5e9, #38bdf8);
+  color-scheme: light;
+}
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
   font-family: 'Space Grotesk', sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+  color: inherit;
 }

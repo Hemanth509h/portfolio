@@ -1,8 +1,8 @@
 /* SECTION */
 .experience-section {
   padding: 100px 20px;
-  background: #020617;
-  color: #fff;
+  background: var(--surface);
+  color: var(--text);
 }
 
 /* HEADING */
@@ -26,7 +26,7 @@
   top: 0;
   width: 2px;
   height: 100%;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.12);
   transform: translateX(-50%);
 }
 
@@ -50,14 +50,14 @@
   transform: translateX(-50%);
   width: 40px;
   height: 40px;
-  background: #020617;
-  border: 2px solid #10a4e8;
+  background: var(--surface-strong);
+  border: 2px solid var(--accent);
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 2;
-  box-shadow: 0 0 15px rgba(16, 164, 232, 0.5);
+  box-shadow: 0 0 15px rgba(16, 164, 232, 0.35);
 }
 
 .timeline-icon .icon {
@@ -78,7 +78,8 @@
 
 /* CARD */
 .card {
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.08);
+  background: var(--surface-strong);
   backdrop-filter: blur(10px);
   padding: 25px;
   border-radius: 20px;
@@ -108,14 +109,14 @@
   padding: 5px 10px;
   border-radius: 20px;
   background: rgba(16, 164, 232, 0.1);
-  color: #10a4e8;
+  color: var(--accent);
   border: 1px solid rgba(16, 164, 232, 0.3);
 }
 
 /* COMPANY */
 .company {
   margin: 10px 0 15px;
-  color: #94a3b8;
+  color: var(--muted);
 }
 
 /* LIST */
@@ -127,7 +128,7 @@
   list-style: none;
   margin-bottom: 10px;
   font-size: 14px;
-  color: #cbd5f5;
+  color: var(--muted);
   position: relative;
   padding-left: 15px;
 }

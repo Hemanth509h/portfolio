@@ -62,15 +62,15 @@ function Home() {
               width: "45px",
               height: "45px",
               borderRadius: "50%",
-              backgroundColor: "#38bdf8",
-              color: "#020617",
+              backgroundColor: "var(--primary)",
+              color: "var(--bg)",
               border: "none",
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               zIndex: 9999,
-              boxShadow: "0 10px 25px rgba(56, 189, 248, 0.4)",
+              boxShadow: "var(--shadow)",
             }}
           >
             <ArrowUp size={22} style={{ strokeWidth: 2.5 }} />

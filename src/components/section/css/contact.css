@@ -2,8 +2,8 @@
 #contact {
   padding: 100px 20px;
   position: relative;
-  background: #020617;
-  color: white;
+  background: var(--surface);
+  color: var(--text);
 }
 
 /* subtle bottom gradient */
@@ -38,7 +38,7 @@
 }
 
 .contact-heading p {
-  color: #94a3b8;
+  color: var(--muted);
   margin-top: 10px;
   font-size: 16px;
 }
@@ -58,8 +58,9 @@
 
 /* ================= GLASS PANEL ================= */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.08);
+  background: var(--surface-strong);
+  border: 1px solid var(--border);
   backdrop-filter: blur(12px);
   border-radius: 20px;
 }
@@ -95,7 +96,7 @@
 
 .info-label {
   font-size: 13px;
-  color: #94a3b8;
+  color: var(--muted);
 }
 
 .info-value {
@@ -162,9 +163,9 @@
   width: 100%;
   padding: 12px 14px;
   border-radius: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid var(--border);
   background: rgba(255, 255, 255, 0.05);
-  color: white;
+  color: var(--text);
   outline: none;
   transition: 0.3s;
 }
@@ -196,8 +197,8 @@
   padding: 14px;
   border: none;
   border-radius: 12px;
-  background: linear-gradient(90deg, #10a4e8, #50e6fc);
-  color: #020617;
+  background: var(--gradient);
+  color: var(--bg);
   font-weight: 600;
   font-size: 15px;
   cursor: pointer;

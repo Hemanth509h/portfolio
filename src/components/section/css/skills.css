@@ -1,5 +1,5 @@
 .skillssection {
-  background-color: #080c16;
+  background-color: var(--surface);
   min-height: 550px;
   display: flex;
   flex-direction: column;
@@ -18,7 +18,7 @@
 }
 .skills-description {
   font-size: 18px;
-  color: #64748b;
+  color: var(--muted);
   line-height: 1.6;
   max-width: 600px;
 }
@@ -30,7 +30,7 @@
   margin-top: 40px;
 }
 .skillscard {
-  background-color: #050913;
+  background-color: var(--surface-strong);
   padding: 20px;
   border-radius: 10px;
   min-height: 200px;
@@ -39,11 +39,11 @@
   align-items: start;
   justify-content: center;
   gap: 15px;
-  border: 1px solid #ffffff10;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   max-width: 500px;
 }
 .skillscard > h3 {
-  color: #ffffff;
+  color: var(--text);
   font-weight: 700;
   font-size: 22px;
   align-self: center;
@@ -70,12 +70,12 @@
 }
 .skillitem {
   padding: 8px 16px;
-  background-color: #10141d;
+  background-color: var(--surface-strong);
   border-radius: 20px;
-  color: #ffffff;
+  color: var(--text);
   font-size: 14px;
   font-weight: 500;
-  border: 1px solid #ffffff10;
+  border: 1px solid rgba(255, 255, 255, 0.08);
   transition: all 0.3s ease;
 }
 .skillitem:hover {

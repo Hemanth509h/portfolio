@@ -1,7 +1,7 @@
 /* ================= GLOBAL ================= */
 /* ================= SECTION ================= */
 .projectssection {
-  background: #020617;
+  background: var(--surface);
   padding: 80px 20px;
   display: flex;
   flex-direction: column;
@@ -23,7 +23,7 @@
 }
 
 .projects-description2 {
-  color: #94a3b8;
+  color: var(--muted);
   margin-top: 10px;
   font-size: 1.1rem;
 }
@@ -45,7 +45,7 @@
 
 /* ================= CARD ================= */
 .project-card {
-  background: linear-gradient(145deg, #0b1220, #0f172a);
+  background: var(--surface-strong);
   border: 1px solid rgba(148, 163, 184, 0.15);
   backdrop-filter: blur(12px);
   border-radius: 18px;
@@ -88,13 +88,13 @@
 .project-title {
   font-size: 1.3rem;
   font-weight: 600;
-  color: #e2e8f0;
+  color: var(--text);
   margin-bottom: 10px;
 }
 
 .project-description {
   font-size: 0.95rem;
-  color: #94a3b8;
+  color: var(--muted);
   line-height: 1.6;
   margin-bottom: 10px;
 }

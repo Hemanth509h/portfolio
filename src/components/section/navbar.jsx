@@ -1,6 +1,7 @@
-import { useState, useEffect } from "react";
-import { Menu, X, Terminal } from "lucide-react";
+import { useState, useEffect, useContext } from "react";
+import { Menu, X, Terminal, Sun, Moon } from "lucide-react";
 import { motion as Motion, AnimatePresence } from "framer-motion";
+import { ThemeContext } from "../../App";
 import "./css/navbar.css";
 
 const NAV_LINKS = [
@@ -15,6 +16,7 @@ export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState("");
+  const { theme, toggleTheme } = useContext(ThemeContext);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -128,6 +130,16 @@ export function Navbar() {
             >
               Hire Me
             </Motion.a>
+
+            <Motion.button
+              type="button"
+              className="theme-toggle-btn"
+              onClick={toggleTheme}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              {theme === "dark" ? <Sun className="theme-icon" /> : <Moon className="theme-icon" />}
+            </Motion.button>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -182,6 +194,20 @@ export function Navbar() {
               >
                 Hire Me
               </Motion.a>
+
+              <Motion.button
+                type="button"
+                className="mobile-theme-toggle-btn"
+                variants={itemVariants}
+                onClick={() => {
+                  toggleTheme();
+                  setIsMenuOpen(false);
+                }}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                {theme === "dark" ? <Sun className="theme-icon" /> : <Moon className="theme-icon" />}
+              </Motion.button>
             </Motion.div>
           )}
         </AnimatePresence>

@@ -1,10 +1,9 @@
 
 .aboutmesection {
-  background-color: #030711;
+  background-color: var(--surface);
   min-height: 100vh;
   padding: 30px 0;
   overflow: hidden;
-
 }
 .aboutmecontent {
   display: flex;
@@ -27,7 +26,7 @@
 }
 .aboutmecontent p {
   font-size: 18px;
-  color: #64748b;
+  color: var(--muted);
   line-height: 1.6;
   max-width: 600px;
 }
@@ -46,7 +45,7 @@ img {
   object-fit: cover;
 }
 .about-description2 > h4 {
-  color: #ffffff;
+  color: var(--text);
   font-weight: 700;
   font-size: 20px;
 }
@@ -80,8 +79,7 @@ img {
   grid-template-columns: repeat(2, 1fr);
   justify-content: space-between;
   gap: 20px;
-  color: #ffffff;
-  
+  color: var(--text);
 }
 .stats-card {
   display: flex;
@@ -89,7 +87,7 @@ img {
   align-items: start;
   justify-content: center;
   gap: 10px;
-  background-color: #10141d;
+  background-color: var(--surface-strong);
   padding: 20px;
   border-radius: 10px;
   height: 120px;
@@ -98,16 +96,16 @@ img {
 .statsicon {
   height: 50px;
   width: 50px;
-  color: #0da2e7;
+  color: var(--accent);
 }
 .statsvalue {
   font-size: 24px;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text);
 }
 .statslabel {
-  font-size: 16 px;
-  color: #64748b;
+  font-size: 16px;
+  color: var(--muted);
 }
 
 

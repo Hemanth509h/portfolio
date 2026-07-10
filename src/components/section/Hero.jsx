@@ -4,7 +4,7 @@ import { ArrowRight, ChevronDown } from "lucide-react";
 import heroimage from "../../assets/hero-bg.png";
 import "./css/hero.css";
 
-const ROLES = ["Full Stack Developer", "Data Analyst", "Problem Solver"];
+const ROLES = ["DevOps","Full Stack Developer", "Basic Data Analyst"];
 
 const PARTICLES_CONFIG = Array.from({ length: 15 }).map((_, i) => ({
   x: `${(i * 7 + 13) % 100}%`,

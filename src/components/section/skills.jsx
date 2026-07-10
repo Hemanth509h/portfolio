@@ -8,7 +8,7 @@ const SKILL_CATEGORIES = [
   },
   {
     title: "DevOps & Cloud",
-    skills: ["Docker", "Kubernetes", "AWS", "GitHub Actions", "Terraform", "CI/CD"],
+    skills: ["Docker",  "AWS", "GitHub Actions", "CI/CD"],
   },
   {
     title: "Data Analysis & ML",

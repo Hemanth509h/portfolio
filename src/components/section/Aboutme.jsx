@@ -90,8 +90,7 @@ export function Aboutme() {
           transition={{ duration: 0.8, delay: 0.2, ease: easeCurve }}
           className="about-description"
         >
-          Passionate developer dedicated to building impactful digital solutions
-          and deriving deep insights from data.
+          DevOps-driven engineer focused on automating infrastructure, improving reliability, and enabling fast, repeatable delivery.
         </Motion.p>
       </div>
 
@@ -113,18 +112,12 @@ export function Aboutme() {
           transition={{ duration: 0.8, delay: 0.3, ease: easeCurve }}
           className="about-description2"
         >
-          <h4>Bridging the gap between engineering and analytics.</h4>
+          <h4>Bridging infrastructure and application delivery.</h4>
           <p>
-            I'm Peddaboina Hemanth kumar, a Full Stack Developer & Data Analyst with over
-            5 years of experience building scalable web applications and complex
-            data pipelines. My dual background allows me to architect robust
-            backend systems while surfacing actionable insights.
+            I'm Peddaboina Hemanth Kumar, a DevOps engineer with a strong secondary focus in Full Stack development. I specialize in building reliable automation, scalable infrastructure, and efficient deployment pipelines.
           </p>
           <p>
-            Whether it's designing a high-performance REST API, crafting a
-            beautiful interactive UI, or training machine learning models to
-            predict market trends, I bring a detail-oriented and holistic
-            approach to every project I touch.
+            From provisioning cloud environments and orchestrating containers to developing responsive web applications, I bring a practical, end-to-end approach to software delivery.
           </p>
           <div className="stats">
             {stats.map((stat, i) => {

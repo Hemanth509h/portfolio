@@ -1,31 +1,41 @@
 :root {
-  --bg: #020617;
-  --surface: rgba(2, 6, 23, 0.92);
-  --surface-strong: #10141d;
-  --card: rgba(255, 255, 255, 0.05);
-  --text: #e5e7eb;
+  --bg: #000000;
+  --surface: rgba(10, 15, 30, 0.4);
+  --surface-strong: rgba(15, 23, 42, 0.65);
+  --card: rgba(255, 255, 255, 0.03);
+  --text: #f8fafc;
   --muted: #94a3b8;
-  --primary: #38bdf8;
-  --accent: #10a4e8;
-  --border: rgba(255, 255, 255, 0.08);
-  --shadow: 0 10px 25px rgba(14, 162, 231, 0.18);
-  --gradient: linear-gradient(90deg, #10a4e8, #50e6fc);
+  --primary: #00b4d8;
+  --accent: #0077b6;
+  --border: rgba(56, 189, 248, 0.15);
+  --shadow: 0 8px 32px 0 rgba(0, 180, 216, 0.15);
+  --gradient: linear-gradient(90deg, #0077b6, #00b4d8, #90e0ef);
   color-scheme: dark;
+
+  /* Glassmorphism system variables */
+  --glass-bg: rgba(15, 23, 42, 0.45);
+  --glass-border: rgba(56, 189, 248, 0.18);
+  --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
 [data-theme="light"] {
-  --bg: #f8fafc;
-  --surface: rgba(255, 255, 255, 0.92);
-  --surface-strong: #ffffff;
-  --card: rgba(15, 23, 42, 0.06);
+  --bg: #f1f5f9;
+  --surface: rgba(255, 255, 255, 0.45);
+  --surface-strong: rgba(255, 255, 255, 0.7);
+  --card: rgba(255, 255, 255, 0.6);
   --text: #0f172a;
   --muted: #64748b;
-  --primary: #0ea5e9;
+  --primary: #0284c7;
   --accent: #0369a1;
-  --border: rgba(15, 23, 42, 0.12);
-  --shadow: 0 10px 25px rgba(14, 165, 233, 0.12);
-  --gradient: linear-gradient(90deg, #0ea5e9, #38bdf8);
+  --border: rgba(0, 180, 216, 0.2);
+  --shadow: 0 10px 25px rgba(0, 180, 216, 0.08);
+  --gradient: linear-gradient(90deg, #0284c7, #38bdf8);
   color-scheme: light;
+
+  /* Glassmorphism system variables */
+  --glass-bg: rgba(255, 255, 255, 0.55);
+  --glass-border: rgba(0, 180, 216, 0.22);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.06);
 }
 
 * {
@@ -42,7 +52,14 @@ html {
 body {
   min-height: 100vh;
   background: var(--bg);
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(0, 180, 216, 0.07) 0%, transparent 35%),
+    radial-gradient(circle at 90% 80%, rgba(37, 99, 235, 0.07) 0%, transparent 40%),
+    radial-gradient(circle at 50% 40%, rgba(0, 210, 255, 0.03) 0%, transparent 50%);
+  background-attachment: fixed;
   color: var(--text);
+  position: relative;
+  overflow-x: hidden;
 }
 
 a {

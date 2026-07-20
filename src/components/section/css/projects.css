@@ -1,7 +1,7 @@
 /* ================= GLOBAL ================= */
 /* ================= SECTION ================= */
 .projectssection {
-  background: var(--surface);
+  background: transparent;
   padding: 80px 20px;
   display: flex;
   flex-direction: column;
@@ -45,9 +45,11 @@
 
 /* ================= CARD ================= */
 .project-card {
-  background: var(--surface-strong);
-  border: 1px solid rgba(148, 163, 184, 0.15);
-  backdrop-filter: blur(12px);
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
   border-radius: 18px;
   padding: 25px;
   transition: 0.3s ease;
@@ -58,9 +60,8 @@
 /* 🔥 Hover Glow Upgrade */
 .project-card:hover {
   transform: translateY(-6px) scale(1.01);
-  border-color: #38bdf8;
-  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3),
-              0 0 40px rgba(59, 130, 246, 0.15);
+  border-color: var(--primary);
+  box-shadow: 0 10px 30px rgba(0, 180, 216, 0.25);
 }
 
 /* ================= HEADER ================= */
@@ -193,8 +194,8 @@ hr {
   border-radius: 12px;
   overflow: hidden;
   margin-bottom: 15px;
-  background: var(--surface-strong);
-  border: 1px solid var(--border);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
 }
 
 .slider-img {

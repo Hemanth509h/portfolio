@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { motion as Motion, AnimatePresence } from "framer-motion";
 import { ArrowRight, ChevronDown } from "lucide-react";
-import heroimage from "../../assets/hero-bg.png";
 import "./css/hero.css";
 
 const ROLES = ["DevOps","Full Stack Developer", "Basic Data Analyst"];
@@ -29,10 +28,6 @@ export function HeroSection() {
 
   return (
     <section className="hero-section">
-      <div
-        className="hero-bg"
-        style={{ backgroundImage: `url(${heroimage})` }}
-      />
 
       {/* Floating Background Particles */}
       <div className="hero-particles" style={{ position: "absolute", inset: 0, zIndex: 1, pointerEvents: "none" }}>

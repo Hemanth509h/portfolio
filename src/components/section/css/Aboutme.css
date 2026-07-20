@@ -1,6 +1,6 @@
 
 .aboutmesection {
-  background-color: var(--surface);
+  background: transparent;
   min-height: 100vh;
   padding: 30px 0;
   overflow: hidden;
@@ -87,9 +87,13 @@ img {
   align-items: start;
   justify-content: center;
   gap: 10px;
-  background-color: var(--surface-strong);
+  background: var(--glass-bg);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
   padding: 20px;
-  border-radius: 10px;
+  border-radius: 16px;
   height: 120px;
   width: 200px;
 }

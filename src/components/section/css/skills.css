@@ -1,5 +1,5 @@
 .skillssection {
-  background-color: var(--surface);
+  background: transparent;
   min-height: 550px;
   display: flex;
   flex-direction: column;
@@ -30,16 +30,19 @@
   margin-top: 40px;
 }
 .skillscard {
-  background-color: var(--surface-strong);
-  padding: 20px;
-  border-radius: 10px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  padding: 24px;
+  border-radius: 18px;
   min-height: 200px;
   display: flex;
   flex-direction: column;
   align-items: start;
   justify-content: center;
   gap: 15px;
-  border: 1px solid var(--border);
   max-width: 500px;
 }
 .skillscard > h3 {
@@ -70,12 +73,14 @@
 }
 .skillitem {
   padding: 8px 16px;
-  background-color: var(--surface-strong);
+  background: var(--glass-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   border-radius: 20px;
   color: var(--text);
   font-size: 14px;
   font-weight: 500;
-  border: 1px solid var(--border);
+  border: 1px solid var(--glass-border);
   transition: all 0.3s ease;
 }
 .skillitem:hover {

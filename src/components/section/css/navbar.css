@@ -9,10 +9,12 @@
 }
 
 .header-scrolled {
-  background: var(--surface);
-  backdrop-filter: blur(10px);
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   padding: 12px 0;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
 }
 
 .header-top {
@@ -138,8 +140,8 @@
   width: 42px;
   height: 42px;
   border-radius: 9999px;
-  border: 1px solid var(--border);
-  background: var(--surface-strong);
+  border: 1px solid var(--glass-border);
+  background: var(--glass-bg);
   color: var(--text);
   cursor: pointer;
   transition: all 0.3s ease;
@@ -191,9 +193,11 @@ html {
   left: 50%;
   transform: translateX(-50%);
   width: 80%;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  backdrop-filter: blur(10px);
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow: var(--glass-shadow);
   display: flex;
   flex-direction: column;
   align-items: center;

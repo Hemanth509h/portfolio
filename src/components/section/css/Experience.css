@@ -1,7 +1,7 @@
 /* SECTION */
 .experience-section {
   padding: 100px 20px;
-  background: var(--surface);
+  background: transparent;
   color: var(--text);
 }
 
@@ -78,17 +78,19 @@
 
 /* CARD */
 .card {
-  background: rgba(255, 255, 255, 0.08);
-  background: var(--surface-strong);
-  backdrop-filter: blur(10px);
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
   padding: 25px;
   border-radius: 20px;
-  border: 1px solid transparent;
   transition: 0.3s;
 }
 
 .card:hover {
-  border-color: rgba(16, 164, 232, 0.4);
+  border-color: var(--primary);
+  box-shadow: 0 10px 30px rgba(0, 180, 216, 0.25);
 }
 
 /* HEADER */

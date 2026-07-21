@@ -228,16 +228,14 @@ const cardVariants = {
 
 /* ================= COMPONENT ================= */
 export function Projects() {
-  const [selectedCategory, setSelectedCategory] = useState("All");
   const easeCurve = [0.16, 1, 0.3, 1];
   const containerRef = useRef(null);
   const [scrollIndex, setScrollIndex] = useState(0);
 
-  const categories = ["All", ...Object.keys(groupedProjects)];
+  const categories = Object.keys(groupedProjects);
+  const [selectedCategory, setSelectedCategory] = useState(categories[0] || "");
 
-  const displayProjects = selectedCategory === "All"
-    ? Object.values(groupedProjects).flat()
-    : groupedProjects[selectedCategory] || [];
+  const displayProjects = groupedProjects[selectedCategory] || [];
 
   const handleScroll = () => {
     if (containerRef.current) {

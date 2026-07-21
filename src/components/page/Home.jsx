@@ -9,6 +9,7 @@ import { ContactSection } from '../section/contact';
 import { Footer } from '../section/Footer';
 import { motion as Motion, AnimatePresence } from 'framer-motion';
 import { ArrowUp } from 'lucide-react';
+import './css/Home.css';
 
 function Home() {
   const [showScrollTop, setShowScrollTop] = useState(false);
@@ -55,23 +56,6 @@ function Home() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             className="scroll-to-top"
-            style={{
-              position: "fixed",
-              bottom: "30px",
-              right: "30px",
-              width: "45px",
-              height: "45px",
-              borderRadius: "50%",
-              backgroundColor: "var(--primary)",
-              color: "var(--bg)",
-              border: "none",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              zIndex: 9999,
-              boxShadow: "var(--shadow)",
-            }}
           >
             <ArrowUp size={22} style={{ strokeWidth: 2.5 }} />
           </Motion.button>

@@ -1,7 +1,14 @@
 /* SECTION */
 .experience-section {
-  padding: 100px 20px;
-  background: transparent;
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  border-radius: 24px;
+  padding: 50px;
+  max-width: 1200px;
+  margin: 60px auto 0 auto;
   color: var(--text);
 }
 
@@ -170,6 +177,12 @@
 
 /* RESPONSIVE */
 @media (max-width: 768px) {
+  .experience-section {
+    padding: 35px 24px;
+    margin: 20px 15px 0 15px;
+    border-radius: 20px;
+  }
+
   .timeline-line {
     left: 20px;
   }

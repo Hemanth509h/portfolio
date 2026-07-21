@@ -28,7 +28,7 @@ const PROJECTS = [
       "Billing Software using Python with GUI. Generates PDF bills and stores history in Excel.",
     tags: ["Python", "GUI", "PDF", "Excel"],
     code: "https://github.com/Hemanth509h/The_Billing_Software.git",
-    demo: "", 
+    demo: "",
     category: "Full Stack & Web Apps",
   },
   {
@@ -86,7 +86,7 @@ const PROJECTS = [
     demo: "",
     category: "Data Analysis",
   },
-   {
+  {
     title: "24-hour National Level Design-A-Thon at VNR VJIET.",
     type: "24hr National Hackathon",
     icon: Code,
@@ -228,12 +228,19 @@ const cardVariants = {
 
 /* ================= COMPONENT ================= */
 export function Projects() {
+  const [selectedCategory, setSelectedCategory] = useState("All");
   const easeCurve = [0.16, 1, 0.3, 1];
+
+  const categories = [...Object.keys(groupedProjects)];
+
+  const displayProjects = selectedCategory === "All"
+    ? Object.values(groupedProjects).flat()
+    : groupedProjects[selectedCategory] || [];
 
   return (
     <section className="projectssection" id="projects">
-      {/* HEADER */}
-      <div className="projects-description">
+      {/* LEFT SIDE: INFO */}
+      <div className="projects-info">
         <Motion.h1
           className="projects-title"
           initial={{ opacity: 0, y: 30 }}
@@ -255,34 +262,54 @@ export function Projects() {
         </Motion.p>
       </div>
 
-      {/* PROJECT GROUPS */}
-      {Object.entries(groupedProjects).map(([category, projects]) => (
-        <div key={category} className="category-section">
-          
-          {/* CATEGORY TITLE */}
-          <Motion.h2
-            className="category-title"
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, ease: easeCurve }}
-          >
-            {category}
-          </Motion.h2>
+      {/* RIGHT SIDE: WRAPPER */}
+      <div className="projects-wrapper">
+        {/* CATEGORY TABS */}
+        <Motion.div
+          className="category-tabs"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, delay: 0.2, ease: easeCurve }}
+        >
+          {categories.map((category) => (
+            <button
+              key={category}
+              className={`category-tab ${selectedCategory === category ? "active" : ""}`}
+              onClick={() => setSelectedCategory(category)}
+              style={{ position: "relative" }}
+            >
+              {selectedCategory === category && (
+                <Motion.div
+                  layoutId="activeTab"
+                  className="active-tab-bg"
+                  transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                />
+              )}
+              <span className="tab-text">{category}</span>
+            </button>
+          ))}
+        </Motion.div>
 
-          {/* PROJECT CARDS */}
-          <Motion.div
-            className="projects-container"
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.1 }}
-          >
-            {projects.map((project, index) => (
+        {/* PROJECT CARDS */}
+        <Motion.div
+          className="projects-container"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.05 }}
+          layout
+        >
+          <AnimatePresence mode="popLayout">
+            {displayProjects.map((project) => (
               <Motion.div
-                key={index}
+                key={project.title}
+                layout
+                initial={{ opacity: 0, scale: 0.92 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.92 }}
+                transition={{ duration: 0.4, ease: easeCurve }}
                 className="project-card"
-                variants={cardVariants}
                 whileHover={{
                   y: -6,
                   boxShadow: "0 15px 30px rgba(56, 189, 248, 0.18)",
@@ -316,6 +343,15 @@ export function Projects() {
                   {project.description}
                 </p>
 
+                {/* HACKATHON HIGHLIGHTS (if available) */}
+                {project.highlights && (
+                  <ul className="project-highlights">
+                    {project.highlights.map((highlight, idx) => (
+                      <li key={idx}>{highlight}</li>
+                    ))}
+                  </ul>
+                )}
+
                 {/* TAGS */}
                 <div className="project-tags">
                   {project.tags.map((tag, i) => (
@@ -342,18 +378,17 @@ export function Projects() {
                     href={project.demo || "#"}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className={`project-link ${
-                      !project.demo ? "disabled" : ""
-                    }`}
+                    className={`project-link ${!project.demo ? "disabled" : ""
+                      }`}
                   >
                     <ExternalLink size={16} /> Demo
                   </a>
                 </div>
               </Motion.div>
             ))}
-          </Motion.div>
-        </div>
-      ))}
+          </AnimatePresence>
+        </Motion.div>
+      </div>
     </section>
   );
 }

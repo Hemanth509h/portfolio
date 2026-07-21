@@ -71,14 +71,7 @@ export function Aboutme() {
           transition={{ duration: 0.8, delay: 0.1, ease: easeCurve }}
           className="about-heading"
         >
-          <span
-            style={{
-              background: "linear-gradient(#10A4E8, #50E6FC, #10A4E8)",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              marginTop: "-30px",
-            }}
-          >
+          <span>
             About Me
           </span>
         </Motion.h2>
@@ -147,7 +140,6 @@ export function Aboutme() {
                     borderColor: "rgba(13, 162, 231, 0.4)",
                   }}
                   className="stats-card"
-                  style={{ transition: "box-shadow 0.3s ease, border-color 0.3s ease" }}
                 >
                   <Icon className="statsicon" />
                   <span className="statsvalue">

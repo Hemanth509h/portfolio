@@ -1,5 +1,5 @@
 import "./css/projects.css";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { motion as Motion, AnimatePresence } from "framer-motion";
 import { Github, ExternalLink, Activity, Code, ChevronLeft, ChevronRight } from "lucide-react";
 
@@ -230,12 +230,33 @@ const cardVariants = {
 export function Projects() {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const easeCurve = [0.16, 1, 0.3, 1];
+  const containerRef = useRef(null);
+  const [scrollIndex, setScrollIndex] = useState(0);
 
-  const categories = [...Object.keys(groupedProjects)];
+  const categories = ["All", ...Object.keys(groupedProjects)];
 
   const displayProjects = selectedCategory === "All"
     ? Object.values(groupedProjects).flat()
     : groupedProjects[selectedCategory] || [];
+
+  const handleScroll = () => {
+    if (containerRef.current) {
+      const { scrollLeft, scrollWidth, clientWidth } = containerRef.current;
+      const maxScroll = scrollWidth - clientWidth;
+      if (maxScroll <= 0) return;
+      const pct = scrollLeft / maxScroll;
+      const index = Math.round(pct * (displayProjects.length - 1));
+      setScrollIndex(index);
+    }
+  };
+
+  const handleCategoryChange = (category) => {
+    setSelectedCategory(category);
+    setScrollIndex(0);
+    if (containerRef.current) {
+      containerRef.current.scrollTo({ left: 0, behavior: "smooth" });
+    }
+  };
 
   return (
     <section className="projectssection" id="projects">
@@ -276,7 +297,7 @@ export function Projects() {
             <button
               key={category}
               className={`category-tab ${selectedCategory === category ? "active" : ""}`}
-              onClick={() => setSelectedCategory(category)}
+              onClick={() => handleCategoryChange(category)}
               style={{ position: "relative" }}
             >
               {selectedCategory === category && (
@@ -293,6 +314,8 @@ export function Projects() {
 
         {/* PROJECT CARDS */}
         <Motion.div
+          ref={containerRef}
+          onScroll={handleScroll}
           className="projects-container"
           variants={containerVariants}
           initial="hidden"
@@ -388,6 +411,29 @@ export function Projects() {
             ))}
           </AnimatePresence>
         </Motion.div>
+
+        {/* DOTS PAGINATION */}
+        {displayProjects.length > 1 && (
+          <div className="container-dots">
+            {displayProjects.map((_, idx) => (
+              <button
+                key={idx}
+                className={`container-dot ${scrollIndex === idx ? "active" : ""}`}
+                onClick={() => {
+                  if (containerRef.current) {
+                    const { scrollWidth, clientWidth } = containerRef.current;
+                    const maxScroll = scrollWidth - clientWidth;
+                    const targetScroll = (idx / (displayProjects.length - 1)) * maxScroll;
+                    containerRef.current.scrollTo({
+                      left: targetScroll,
+                      behavior: "smooth"
+                    });
+                  }
+                }}
+              />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
